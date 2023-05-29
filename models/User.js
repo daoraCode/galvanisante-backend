@@ -12,19 +12,25 @@ const UserSchema = Schema(
     email: {
       type: String,
       required: true,
+      lowercase: true,
       unique: true,
     },
     password: {
       type: String,
       required: true,
+      trim: true,
+      min: 5,
       max: 9,
     },
-    // password: {
-    //   type: String,
-    //   required: true,
-    //   max: 9,
-    // },
-    token: String,
+    role: {
+      type: String,
+      required: true,
+      max: 9,
+    },
+    bookmarks: [{ type: Schema.Types.ObjectId, ref: "Movie" }],
+    token: {
+      type: String,
+    },
   },
   {
     timestamps: true,
