@@ -1,12 +1,16 @@
 const { Schema, model } = require("mongoose");
 
-const UserSchema = Schema(
+const userSchema = Schema(
   {
     username: {
       type: String,
       minlength: 4,
       maxlength: 10,
       required: true,
+      unique: true,
+    },
+    usertag: {
+      type: String,
       unique: true,
     },
     email: {
@@ -19,13 +23,14 @@ const UserSchema = Schema(
       type: String,
       required: true,
       trim: true,
-      min: 5,
+      min: 4,
       max: 9,
     },
     role: {
       type: String,
+      enum: ["admin", "user"],
+      default: "user",
       required: true,
-      max: 9,
     },
     bookmarks: [{ type: Schema.Types.ObjectId, ref: "Movie" }],
     token: {
@@ -37,7 +42,6 @@ const UserSchema = Schema(
   }
 );
 
-// creation of model for a user
-const User = model("User", UserSchema);
-
+// user model
+const User = model("User", userSchema);
 module.exports = User;
