@@ -22,9 +22,11 @@ app.use(express.json({ limit: "40mb" }));
 app.use(express.urlencoded({ extended: false, limit: "40mb" }));
 
 // Routes and other configurations
-
+// app.get("/test", (req, res) => {
+//   console.log("Hello");
+// });
 
 // Start the server
-app.listen(port, () => {
+app.listen(PORT, () => {
   console.log(`Server is running at port: ${PORT}`);
 });
