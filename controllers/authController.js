@@ -15,6 +15,7 @@ export const signUp = async (req, res) => {
       return res.status(409).json({
         success: false,
         message: "User already exists.",
+        user: existingUser,
       });
     }
 
@@ -31,11 +32,13 @@ export const signUp = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "New user created succesfully.",
+      newSubscriber: newUser,
     });
   } catch (err) {
     res.status(500).json({
       success: false,
       message: "Error creating new account user.",
+      error: err.message,
     });
   }
 };
@@ -44,15 +47,21 @@ export const logIn = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // verify if user exists
     if (!(email && password)) {
       return res
         .status(401)
         .json({ message: "Required email and password for login." });
     }
 
+    // verify if user exists
     const foundUser = await User.findOne({ email });
-    if (!foundUser) return res.sendStatus(400);
+    if (!foundUser) {
+      return res.status(400).json({
+        success: false,
+        message: "User already exists.",
+        error: err.message,
+      });
+    }
 
     if (foundUser && (await bcrypt.compare(password, foundUser.password))) {
       const token = generateAccessToken({ email });
@@ -66,6 +75,7 @@ export const logIn = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Error Login.",
+      error: err.message,
     });
   }
 };
