@@ -1,7 +1,12 @@
-const Router = require("express").Router();
+import { Router } from "express";
+import { signUp, logIn } from "../controllers/authController.js";
 
-// READ ** get all user
+// route
+const userRouter = Router();
 
-// READ ** get one user
+// route implemented for users
+// @POST
+userRouter.post("/register", signUp);
+userRouter.post("/login", logIn);
 
-// READ **
+export default userRouter;

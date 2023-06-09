@@ -1,10 +1,12 @@
-const express = require("express");
+import express from "express";
 const app = express();
-// const bodyParser = require("body-parser"); no need in later express version of application
-const morgan = require("morgan");
-const dotenv = require("dotenv");
-const connectDatabase = require("./config/dbConfig.js");
-const cors = require("cors");
+
+import morgan from "morgan";
+import dotenv from "dotenv";
+import connectDatabase from "./config/dbConfig.js";
+import cors from "cors";
+import userRouter from "./routes/users.js";
+import movieRouter from "./routes/movies.js";
 
 // load environment variables
 dotenv.config();
@@ -25,6 +27,10 @@ app.use(express.urlencoded({ extended: false, limit: "40mb" }));
 // app.get("/test", (req, res) => {
 //   console.log("Hello");
 // });
+
+// routes
+app.use("/api/users", userRouter);
+app.use("/api/movies", movieRouter);
 
 // Start the server
 app.listen(PORT, () => {

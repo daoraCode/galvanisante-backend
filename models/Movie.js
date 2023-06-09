@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+import { Schema, model } from "mongoose";
 
 const movieSchema = Schema(
   {
@@ -6,9 +6,9 @@ const movieSchema = Schema(
       type: String,
       required: true,
     },
-    moviePicture: {
+    poster: {
       type: String,
-      required: true,
+      default: "",
     },
     released: {
       type: Number,
@@ -22,6 +22,9 @@ const movieSchema = Schema(
       type: String,
       required: true,
     },
+    duration: {
+      type: Number,
+    },
   },
   {
     timestamps: true,
@@ -30,4 +33,4 @@ const movieSchema = Schema(
 
 // movie model
 const Movie = model("Movie", movieSchema);
-module.exports = Movie;
+export default Movie;

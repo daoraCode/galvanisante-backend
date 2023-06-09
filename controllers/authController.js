@@ -1,103 +1,71 @@
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const User = require("../models/User");
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
-export const signup = async (req, res) => {
+// token for users created after registering process
+const generateAccessToken = (username) => {
+  return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: "5s" });
+};
+
+export const signUp = async (req, res) => {
   try {
-    const { username, email, password, role } = req.body;
-
-    // verify if for all informations have been send
-    if (!(username, email, password)) {
-      res.status(400).send({
-        message: "All credentials fields are mandatory. Please retry.",
+    // verify if user already exists
+    const existingUser = await User.findOne({ email: req.body.email });
+    if (existingUser) {
+      return res.status(409).json({
         success: false,
+        message: "User already exists.",
       });
     }
 
-    // verify if user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res
-        .status(409)
-        .send({ message: "User already exists.", success: false });
-    }
-
     // hash password
-    const salt = await bcrypt.genSalt(10); // encryptment
+    const password = req.body.password;
+    const salt = await bcrypt.genSalt(12); // encryptment
     const hash = await bcrypt.hash(password, salt); // hash
-
-    const newUser = new User({
-      username,
-      email,
-      password: hash,
-      role,
-    });
-
-    // generate a token for user's authentication
-    const accessAuthToken = jwt.sign(
-      { user_id: newUser.id, email },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "30s" }
-    );
-    accessAuthToken.token = token;
-
-    const refreshAuthToken = jwt.sign(
-      { user_id: newUser.id, email },
-      process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: "1h" }
-    );
-    refreshAuthToken.token = token;
-
-    // cookie not available to javascript
-    res.cookie("jwt", refreshAuthToken, {
-      httpOnly: true,
-      max: 24 * 60 * 60 * 1000,
-    });
+    req.body.password = hash; // password hashed
 
     // creates a new user
-    res.status(200).send({
+    const newUser = new User(req.body);
+    await newUser.save();
+
+    res.status(200).json({
       success: true,
       message: "New user created succesfully.",
     });
   } catch (err) {
-    res.status(500).send({
+    res.status(500).json({
       success: false,
-      message: err.message,
+      message: "Error creating new account user.",
     });
   }
 };
 
-export const login = async (req, res) => {
+export const logIn = async (req, res) => {
   try {
     const { email, password } = req.body;
 
     // verify if user exists
-    if (!(email, password)) {
+    if (!(email && password)) {
       return res
-        .status(400)
+        .status(401)
         .json({ message: "Required email and password for login." });
     }
 
     const foundUser = await User.findOne({ email });
-    if (!foundUser) return res.sendStatus(401); // Unauthorized
+    if (!foundUser) return res.sendStatus(400);
+
     if (foundUser && (await bcrypt.compare(password, foundUser.password))) {
-      const token = jwt.sign(
-        { user_id: user._id, email },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: "1h" }
-      );
-      foundUser.token = token;
+      const token = generateAccessToken({ email });
       return res.status(200).json({
         success: true,
-        message: "User account have been found",
-        foundUser,
-        token,
+        message: "Login succesfull.",
+        data: token,
       });
     }
   } catch (err) {
-    res.status(500).send({
+    res.status(500).json({
       success: false,
-      message: err.message,
+      message: "Error Login.",
     });
   }
 };

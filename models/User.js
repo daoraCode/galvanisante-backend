@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+import { Schema, model } from "mongoose";
 
 const userSchema = Schema(
   {
@@ -28,11 +28,14 @@ const userSchema = Schema(
     },
     role: {
       type: String,
-      enum: ["admin", "user"],
       default: "user",
-      required: true,
     },
-    bookmarks: [{ type: Schema.Types.ObjectId, ref: "Movie" }],
+    // bookmarks: [{ type: Schema.Types.ObjectId, ref: "Movie" }],
+    weekly: [
+      {
+        type: String, // edit this property soon to make a relation
+      },
+    ],
     token: {
       type: String,
     },
@@ -44,4 +47,4 @@ const userSchema = Schema(
 
 // user model
 const User = model("User", userSchema);
-module.exports = User;
+export default User;
