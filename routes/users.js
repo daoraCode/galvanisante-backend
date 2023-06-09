@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { signUp, logIn } from "../controllers/authController.js";
 
-// route
+// router
 const userRouter = Router();
 
 // route implemented for users

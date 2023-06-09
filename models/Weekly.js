@@ -1,21 +1,26 @@
-// import { Schema, model } from "mongoose";
+import { Schema, model } from "mongoose";
 
-// const weeklySchema = Schema(
-//   {
-//     title: {
-//       type: String,
-//       required: true,
-//     },
-//     title: {
-//       type: String,
-//       required: true,
-//     },
-//     title: {
-//       type: String,
-//       required: true,
-//     },
-//   },
-//   { timestamp: true }
-// );
+const weeklySchema = Schema(
+  {
+    mainTitle: {
+      type: String,
+      required: true,
+    },
+    releaseDate: {
+      type: Date.now(),
+    }
+    illustration: {
+      type: String,
+      default: "",
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamp: true }
+);
 
-// export default
+const Weekly = model("Weekly", weeklySchema);
+export default Weekly;

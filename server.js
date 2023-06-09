@@ -5,8 +5,11 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import connectDatabase from "./config/dbConfig.js";
 import cors from "cors";
+
+// routes
 import userRouter from "./routes/users.js";
 import movieRouter from "./routes/movies.js";
+import weeklyRouter from "./routes/weeklies.js";
 
 // load environment variables
 dotenv.config();
@@ -31,6 +34,7 @@ app.use(express.urlencoded({ extended: false, limit: "40mb" }));
 // routes
 app.use("/api/users", userRouter);
 app.use("/api/movies", movieRouter);
+app.use("/api/weeklies", weeklyRouter);
 
 // Start the server
 app.listen(PORT, () => {

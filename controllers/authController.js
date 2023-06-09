@@ -67,7 +67,7 @@ export const logIn = async (req, res) => {
       const token = generateAccessToken({ email });
       return res.status(200).json({
         success: true,
-        message: "Login succesfull.",
+        message: "Logged succesfully.",
         data: token,
       });
     }

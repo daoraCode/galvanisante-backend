@@ -1,7 +1,11 @@
 import { Router } from "express";
-import { createMovie, getAllMovies } from "../controllers/movieContollers.js";
+import {
+  createMovie,
+  getAllMovies,
+  getMovie,
+} from "../controllers/movieContollers.js";
 
-// route
+// router
 const movieRouter = Router();
 
 // routes implemented for admin
@@ -10,7 +14,7 @@ const movieRouter = Router();
 movieRouter.post("/create-movie", createMovie);
 
 // @GET
-movieRouter.get("/feed-movie", getAllMovies);
+movieRouter.get("/movie", getAllMovies);
 movieRouter.get("/movie/:id", getMovie);
 
 export default movieRouter;
