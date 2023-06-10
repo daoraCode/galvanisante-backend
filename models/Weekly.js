@@ -2,14 +2,11 @@ import { Schema, model } from "mongoose";
 
 const weeklySchema = Schema(
   {
-    mainTitle: {
+    theme: {
       type: String,
       required: true,
     },
-    releaseDate: {
-      type: Date.now(),
-    }
-    illustration: {
+    presentation: {
       type: String,
       default: "",
       required: true,

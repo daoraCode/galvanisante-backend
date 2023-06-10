@@ -31,7 +31,7 @@ const userSchema = Schema(
       default: "user",
     },
     // bookmarks: [{ type: Schema.Types.ObjectId, ref: "Movie" }],
-    weekly: [
+    weeklies: [
       {
         type: String, // edit this property soon to make a relation
       },

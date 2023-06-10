@@ -18,7 +18,7 @@ const movieSchema = Schema(
       type: String,
       required: true,
     },
-    summary: {
+    overview: {
       type: String,
       required: true,
     },

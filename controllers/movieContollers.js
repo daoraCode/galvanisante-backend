@@ -19,7 +19,7 @@ export const createMovie = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Movie created succesfully.",
+      message: "Movie has been created succesfully.",
       movie: newMovie,
     });
   } catch (err) {
@@ -33,7 +33,11 @@ export const createMovie = async (req, res) => {
 
 export const getAllMovies = async (req, res) => {
   const movies = await Movie.find();
-  res.status(200).json({ success: true, movieList: movies });
+  res.status(200).json({
+    success: true,
+    message: "Movies retrieved succesfully.",
+    movieList: movies,
+  });
 };
 
 export const getMovie = async (req, res) => {

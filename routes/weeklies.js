@@ -1,16 +1,22 @@
 import { Router } from "express";
-import { createWeekly } from "../controllers/weeklyController.js";
+import {
+  createWeekly,
+  getAllWeeklies,
+  getWeekly,
+} from "../controllers/weeklyController.js";
 
+// routes implemented for admin
 // router
 const weeklyRouter = Router();
 
-// routes implemented for admin
-// allows to create a new weekly,
 // @POST
+// allows admin to create a weekly
 weeklyRouter.post("/create-weekly", createWeekly);
 
 // @GET
-// allows admin to retrieve all weekly built
-// weeklyRouter.get("/weekly", createWeekly);
+// allows admin to find weekly by its specific _id or all of them
+weeklyRouter.get("/weekly", getAllWeeklies);
+weeklyRouter.get("/weekly/:id", getWeekly);
+
 
 export default weeklyRouter;
