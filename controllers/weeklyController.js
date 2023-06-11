@@ -24,7 +24,7 @@ export const createWeekly = async (req, res) => {
       message: "Weekly has been created succesfully.",
       weekly: newWeekly,
     });
-  } catch (error) {
+  } catch (err) {
     res.status(500).json({
       success: false,
       message: "Error occurred creating weekly.",
@@ -43,11 +43,12 @@ export const getAllWeeklies = async (req, res) => {
   });
 };
 
+// get a unique weekly by its id
 export const getWeekly = async (req, res) => {
-  const { id } = req.params;
+  const { _id } = req.params;
 
   try {
-    const weekly = await Weekly.findById({ id: id });
+    const weekly = await Weekly.findById({ _id: _id });
     res.status(200).json({
       success: true,
       message: "Weekly found succesfully.",
@@ -60,4 +61,9 @@ export const getWeekly = async (req, res) => {
       error: err.message,
     });
   }
+};
+
+export const deleteWeekly = async (req, res) => {
+  const { id } = req.params;
+  await Weekly.findOneAndDelete({ _id: id });
 };

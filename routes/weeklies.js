@@ -3,6 +3,7 @@ import {
   createWeekly,
   getAllWeeklies,
   getWeekly,
+  deleteWeekly,
 } from "../controllers/weeklyController.js";
 
 // routes implemented for admin
@@ -16,7 +17,11 @@ weeklyRouter.post("/create-weekly", createWeekly);
 // @GET
 // allows admin to find weekly by its specific _id or all of them
 weeklyRouter.get("/weekly", getAllWeeklies);
-weeklyRouter.get("/weekly/:id", getWeekly);
+weeklyRouter.get("/weekly/:_id", getWeekly);
+
+// @DELETE
+// performs the deletion of a weekly from database
+weeklyRouter.delete("/weekly/:id", deleteWeekly);
 
 
 export default weeklyRouter;

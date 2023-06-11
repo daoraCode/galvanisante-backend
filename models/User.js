@@ -26,14 +26,14 @@ const userSchema = Schema(
       min: 4,
       max: 9,
     },
-    role: {
-      type: String,
-      default: "user",
+    isAdmin: {
+      type: Boolean,
+      default: false,
     },
-    // bookmarks: [{ type: Schema.Types.ObjectId, ref: "Movie" }],
     weeklies: [
       {
-        type: String, // edit this property soon to make a relation
+        type: Schema.Types.ObjectId,
+        ref: "Weekly",
       },
     ],
     token: {
