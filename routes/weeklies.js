@@ -6,13 +6,15 @@ import {
   deleteWeekly,
 } from "../controllers/weeklyController.js";
 
+import { isAdminAuthentified } from "../middlewares/users.js";
+
 // routes implemented for admin
 // router
 const weeklyRouter = Router();
 
 // @POST
 // allows admin to create a weekly
-weeklyRouter.post("/create-weekly", createWeekly);
+weeklyRouter.post("/create-weekly", isAdminAuthentified, createWeekly);
 
 // @GET
 // allows admin to find weekly by its specific _id or all of them

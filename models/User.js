@@ -17,6 +17,7 @@ const userSchema = Schema(
       type: String,
       required: true,
       lowercase: true,
+      trim: true,
       unique: true,
     },
     password: {
@@ -28,7 +29,7 @@ const userSchema = Schema(
     },
     isAdmin: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     weeklies: [
       {

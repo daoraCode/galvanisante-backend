@@ -6,7 +6,7 @@ import Weekly from "../models/Weekly.js";
 export const createWeekly = async (req, res) => {
   try {
     const existingWeekly = await Weekly.findOne({
-      mainTitle: req.body.mainTitle,
+      theme: req.body.theme,
     });
 
     if (existingWeekly) {
@@ -16,13 +16,16 @@ export const createWeekly = async (req, res) => {
       });
     }
 
-    const newWeekly = await new Weekly(req.body);
-    await newWeekly.save();
+    const newWeekly = await Weekly.create({
+      ...req.body
+    })
+    // await newWeekly.save();
 
     res.status(200).json({
       success: true,
       message: "Weekly has been created succesfully.",
       weekly: newWeekly,
+      editor: _id
     });
   } catch (err) {
     res.status(500).json({

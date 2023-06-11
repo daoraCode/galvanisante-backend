@@ -20,7 +20,7 @@ const weeklySchema = Schema(
       ref: "User",
     },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 // after every deleted weeklies the admin user will be updated

@@ -9,15 +9,7 @@ const generateAccessToken = (username) => {
 
 export const signUp = async (req, res) => {
   try {
-    // verify if user already exists
-    const existingUser = await User.findOne({ email: req.body.email });
-    if (existingUser) {
-      return res.status(409).json({
-        success: false,
-        message: "User already exists.",
-        user: existingUser,
-      });
-    }
+    // middleware (verifynigUser)
 
     // hash password
     const password = req.body.password;
@@ -37,7 +29,7 @@ export const signUp = async (req, res) => {
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: "Error creating new account user.",
+      message: "Failed creating user.",
       error: err.message,
     });
   }
@@ -59,7 +51,6 @@ export const logIn = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "User already exists.",
-        error: err.message,
       });
     }
 
@@ -67,14 +58,14 @@ export const logIn = async (req, res) => {
       const token = generateAccessToken({ email });
       return res.status(200).json({
         success: true,
-        message: "Logged succesfully.",
+        message: "Logged In succesfully.",
         data: token,
       });
     }
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: "Error Login.",
+      message: "Error on log In.",
       error: err.message,
     });
   }
