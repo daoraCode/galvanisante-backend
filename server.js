@@ -7,9 +7,9 @@ import connectDatabase from "./config/dbConfig.js";
 import cors from "cors";
 
 // routes
-import userRouter from "./routes/users.js";
-import movieRouter from "./routes/movies.js";
-import weeklyRouter from "./routes/weeklies.js";
+import userRouter from "./routes/users.routes.js";
+import movieRouter from "./routes/movies.routes.js";
+import weeklyRouter from "./routes/weeklies.routes.js";
 
 // load environment variables
 dotenv.config();

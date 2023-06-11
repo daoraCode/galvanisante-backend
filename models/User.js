@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, SchemaTypes, model } from "mongoose";
 
 const userSchema = Schema(
   {
@@ -29,7 +29,7 @@ const userSchema = Schema(
     },
     isAdmin: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     weeklies: [
       {

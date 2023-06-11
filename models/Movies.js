@@ -25,6 +25,11 @@ const movieSchema = Schema(
     duration: {
       type: Number,
     },
+    publisher: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   {
     timestamps: true,
