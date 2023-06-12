@@ -12,9 +12,8 @@ import {
 import Weekly from "../models/Weekly.js";
 
 // middlewares
-import { isAuth } from "../middlewares/auth.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
-
+import { isAuth } from "../middlewares/auth.js";
 // import { isAuthenticated } from "../middlewares/auth.js";
 
 // routes implemented for admin
