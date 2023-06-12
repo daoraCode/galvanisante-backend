@@ -1,30 +1,27 @@
 import Movie from "../models/Movies.js";
 
 export const createMovie = async (req, res) => {
-  // const existingMovie = await Movie.findOne({
-  //   title: req.body.title,
-  // });
+  const existingMovie = await Movie.findOne({
+    title: req.body.title,
+  });
 
-  // if (existingMovie) {
-  //   return res
-  //     .status(403)
-  //     .json({ success: false, message: "Movie already exists." });
-  // }
-  // await newMovie.save();
+  if (existingMovie) {
+    return res.status(403).json({ error: "Movie already exists." });
+  }
+
   try {
     const newMovie = await Movie.create({
       ...req.body,
     });
-    res.json(newMovie);
-    // res.status(200).json({
-    //   success: true,
-    //   message: "Movie has been created succesfully.",
-    //   movie: newMovie,
-    // });
+    res.status(201).json({
+      success: true,
+      message: "Created movie succesfully.",
+      movie: newMovie,
+    });
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: "Error occurred creating movie.",
+      message: "Error occurred. Movie not created.",
       error: err.message,
     });
   }
@@ -34,7 +31,7 @@ export const getAllMovies = async (req, res) => {
   const movies = await Movie.find();
   res.status(200).json({
     success: true,
-    message: "Movies found succesfully.",
+    message: "Found movies succesfully.",
     movieList: movies,
   });
 };
@@ -45,13 +42,15 @@ export const getMovie = async (req, res) => {
     const movie = await Movie.findById({ _id: id });
     res.status(200).json({
       success: true,
-      message: "Movie found succesfully.",
+      message: "Found movie succesfully.",
       movie: movie,
     });
   } catch (err) {
-    res
-      .status(500)
-      .json({ success: false, message: "Not found movie.", err: err.message });
+    res.status(500).json({
+      success: false,
+      error: "Error. Not found movie.",
+      err: err.message,
+    });
   }
 };
 

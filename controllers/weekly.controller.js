@@ -2,22 +2,34 @@ import Weekly from "../models/Weekly.js";
 import User from "../models/User.js";
 
 export const createWeekly = async (req, res) => {
+  const { id } = req.params;
+  const { theme, presentation, content } = req.body;
+  const existingWeekly = await Weekly.findOne({
+    theme: req.body.theme,
+  });
+
+  if (existingWeekly) {
+    return res.status(403).json({
+      success: false,
+      message: "Weekly already exists.",
+    });
+  }
   try {
     const newWeekly = await Weekly.create({
       ...req.body,
     });
-    res.json(newWeekly);
-    // await newWeekly.save();
-    // res.status(200).json({
-    //   success: true,
-    //   message: "Weekly has been created succesfully.",
-    //   weekly: newWeekly,
-    //   // editor:
-    // });
+    // res.json(newWeekly);
+    await newWeekly.save();
+    res.status(201).json({
+      success: true,
+      message: "Created weekly succesfully.",
+      weekly: newWeekly,
+      // editor:
+    });
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: "Error occurred creating weekly.",
+      message: "Error occurred. Weekly not created.",
       error: err.message,
     });
   }
@@ -47,7 +59,7 @@ export const getWeekly = async (req, res) => {
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: "Not found weekly.",
+      message: "Error. Not found weekly.",
       error: err.message,
     });
   }
@@ -56,19 +68,9 @@ export const getWeekly = async (req, res) => {
 export const deleteWeekly = async (req, res) => {
   const { id } = req.params;
   await Weekly.findOneAndDelete({ _id: id });
+  res.status();
 };
 
-// const { id } = req.params;
-// const { theme, presentation, content } = req.body;
-// const existingWeekly = await Weekly.findOne({
-//   theme: req.body.theme,
-// });
 
-// if (existingWeekly) {
-//   return res.status(403).json({
-//     success: false,
-//     message: "Weekly already exists.",
-//   });
-// }
 
 // const editor = await User.findById({ _id: id });

@@ -1,7 +1,9 @@
+import User from "../models/User.js";
+// for client user
+
 export const verifyExistingSubscriber = async (req, res, next) => {
   const { email } = req.body;
   const user = await User.findOne({ email: email });
-  // for client user
   if (user) {
     res.status(409).json({
       success: false,
