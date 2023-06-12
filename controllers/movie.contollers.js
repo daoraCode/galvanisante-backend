@@ -1,27 +1,26 @@
 import Movie from "../models/Movies.js";
 
-// middleware
-// adminAuthentified
-
 export const createMovie = async (req, res) => {
   try {
-    const existingMovie = await Movie.findOne({
-      title: req.body.title,
-    });
+    // const existingMovie = await Movie.findOne({
+    //   title: req.body.title,
+    // });
 
-    if (existingMovie) {
-      return res
-        .status(403)
-        .json({ success: false, message: "Movie already exists." });
-    }
-    const newMovie = new Movie(req.body);
-    await newMovie.save();
-
-    res.status(200).json({
-      success: true,
-      message: "Movie has been created succesfully.",
-      movie: newMovie,
+    // if (existingMovie) {
+    //   return res
+    //     .status(403)
+    //     .json({ success: false, message: "Movie already exists." });
+    // }
+    // await newMovie.save();
+    const newMovie = await Movie.create({
+      ...req.body,
     });
+    res.json(newMovie);
+    // res.status(200).json({
+    //   success: true,
+    //   message: "Movie has been created succesfully.",
+    //   movie: newMovie,
+    // });
   } catch (err) {
     res.status(500).json({
       success: false,
@@ -35,7 +34,7 @@ export const getAllMovies = async (req, res) => {
   const movies = await Movie.find();
   res.status(200).json({
     success: true,
-    message: "Movies retrieved succesfully.",
+    message: "Movies found succesfully.",
     movieList: movies,
   });
 };
@@ -46,7 +45,7 @@ export const getMovie = async (req, res) => {
     const movie = await Movie.findById({ _id: id });
     res.status(200).json({
       success: true,
-      message: "Movie retrieved succesfully.",
+      message: "Movie found succesfully.",
       movie: movie,
     });
   } catch (err) {

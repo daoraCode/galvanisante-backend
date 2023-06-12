@@ -37,6 +37,12 @@ const userSchema = Schema(
         ref: "Weekly",
       },
     ],
+    movies: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Movie",
+      },
+    ],
     token: {
       type: String,
     },

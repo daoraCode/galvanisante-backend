@@ -38,5 +38,5 @@ app.use("/api/weeklies", weeklyRouter);
 
 // Start the server
 app.listen(PORT, () => {
-  console.log(`Server is running at port: ${PORT}`);
+  console.log(`Server is running at port ${PORT}`);
 });

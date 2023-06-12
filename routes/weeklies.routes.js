@@ -5,47 +5,39 @@ import {
   getAllWeeklies,
   getWeekly,
   deleteWeekly,
+  createWeekly,
+  // updateWeekly,
 } from "../controllers/weekly.controller.js";
 
 import Weekly from "../models/Weekly.js";
+
+// middlewares
+import { isAuth } from "../middlewares/auth.js";
+import { isAdmin } from "../middlewares/isAdmin.js";
+
 // import { isAuthenticated } from "../middlewares/auth.js";
 
 // routes implemented for admin
 // router
 const weeklyRouter = Router();
 
-// @POST
 // CREATE
+// @POST
 // allows admin to create a weekly
-weeklyRouter.post("/create-weekly", async (req, res) => {
-  try {
-    const newWeekly = await Weekly.create({
-      ...req.body,
-    });
-    res.json(newWeekly);
-    // await newWeekly.save();
-    // res.status(200).json({
-    //   success: true,
-    //   message: "Weekly has been created succesfully.",
-    //   weekly: newWeekly,
-    //   // editor:
-    // });
-  } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: "Error occurred creating weekly.",
-      error: err.message,
-    });
-  }
-});
+weeklyRouter.post("/weekly/create-weekly", isAuth, isAdmin, createWeekly);
 
 // @GET
 // allows admin to find weekly by its specific _id or all of them
 weeklyRouter.get("/weekly", getAllWeeklies);
 weeklyRouter.get("/weekly/:_id", getWeekly);
 
+// DELETE
 // @DELETE
 // performs the deletion of a weekly from database
-weeklyRouter.delete("/weekly/:id", deleteWeekly);
+weeklyRouter.delete("/weekly/:id", isAuth, deleteWeekly);
+
+// UPDATE
+// @PUT
+// weeklyRouter.put("/weekly/:id", updateWeekly);
 
 export default weeklyRouter;
