@@ -1,17 +1,17 @@
 import Movie from "../models/Movies.js";
 
 export const createMovie = async (req, res) => {
-  try {
-    // const existingMovie = await Movie.findOne({
-    //   title: req.body.title,
-    // });
+  // const existingMovie = await Movie.findOne({
+  //   title: req.body.title,
+  // });
 
-    // if (existingMovie) {
-    //   return res
-    //     .status(403)
-    //     .json({ success: false, message: "Movie already exists." });
-    // }
-    // await newMovie.save();
+  // if (existingMovie) {
+  //   return res
+  //     .status(403)
+  //     .json({ success: false, message: "Movie already exists." });
+  // }
+  // await newMovie.save();
+  try {
     const newMovie = await Movie.create({
       ...req.body,
     });
@@ -54,3 +54,9 @@ export const getMovie = async (req, res) => {
       .json({ success: false, message: "Not found movie.", err: err.message });
   }
 };
+
+export const deleteMovie = async (req, res) => {
+  const { id } = req.params;
+  await Movie.findOneAndDelete({ _id: id });
+};
+

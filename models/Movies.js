@@ -28,13 +28,27 @@ const movieSchema = Schema(
     publisher: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      // required: true,
     },
   },
   {
     timestamps: true,
   }
 );
+
+movieSchema.post("findOneAndDelete", async function (movie) {
+  await model("User").findByIdAndUpdate(
+    { _id: movie.publisher },
+    { $pull: { movies: movie._id } }
+  );
+});
+
+movieSchema.post("save", async function (movie) {
+  await model("User").findByIdAndUpdate(
+    { _id: movie.publisher },
+    { $push: { movies: movie._id } }
+  );
+});
 
 // movie model
 const Movie = model("Movie", movieSchema);
