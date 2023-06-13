@@ -10,6 +10,6 @@ export const isAdmin = async (req, res, next) => {
   if (user && user.isAdmin) {
     next();
   } else {
-    res.status(401).json({ error: "Unauthorized." });
+    res.status(403).json({ error: "Forbidden." });
   }
 };

@@ -8,6 +8,6 @@ export const isAuth = async (req, res, next) => {
     next(); // move to the next function/middleware
   } catch (err) {
     console.log(err);
-    res.status(401).json({ message: "Authentication failed. Invalid token." });
+    res.status(401).json({ error: "Authentication failed. Invalid token." });
   }
 };

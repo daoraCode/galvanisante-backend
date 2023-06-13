@@ -8,7 +8,7 @@ export const verifyExistingSubscriber = async (req, res, next) => {
     res.status(409).json({
       success: false,
       message: "User already exists.",
-      user: user,
+      oldUser: user.email,
     });
   } else {
     next();
@@ -19,6 +19,6 @@ export const isSubscriberAuthenticated = async (req, res, next) => {
   if (req.user) {
     next();
   } else {
-    res.status(401).json({ error: "Unauthorized" });
+    res.status(403).json({ error: "Forbidden" });
   }
 };

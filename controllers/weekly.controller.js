@@ -4,6 +4,12 @@ import User from "../models/User.js";
 export const createWeekly = async (req, res) => {
   const { id } = req.params;
   const { theme, presentation, content } = req.body;
+
+  if (!theme || !presentation || !content)
+    return res
+      .status(401)
+      .json({ error: "Missing datas. All fields are mandatory." });
+
   const existingWeekly = await Weekly.findOne({
     theme: req.body.theme,
   });
@@ -12,19 +18,22 @@ export const createWeekly = async (req, res) => {
     return res.status(403).json({
       success: false,
       message: "Weekly already exists.",
+      oldWeekly: existingWeekly.theme,
     });
   }
   try {
-    const newWeekly = await Weekly.create({
-      ...req.body,
-    });
-    // res.json(newWeekly);
+    // const newWeekly = await Weekly.create({
+    // ...req.body,
+    // });
+
+    const newWeekly = new Weekly(req.body);
     await newWeekly.save();
+
     res.status(201).json({
       success: true,
       message: "Created weekly succesfully.",
-      weekly: newWeekly,
-      // editor:
+      createdWeekly: newWeekly,
+      editor: newWeekly.editor,
     });
   } catch (err) {
     res.status(500).json({
@@ -67,10 +76,19 @@ export const getWeekly = async (req, res) => {
 
 export const deleteWeekly = async (req, res) => {
   const { id } = req.params;
-  await Weekly.findOneAndDelete({ _id: id });
-  res.status();
+  try {
+    await Weekly.findOneAndDelete({ _id: id });
+    res
+      .status(204)
+      .send({ success: true, message: "Resource deleted succesfully." });
+  } catch (err) {
+    res.status(410).json({
+      success: false,
+      message: "Resource already deleted.",
+      error: err.message,
+    });
+  }
 };
-
 
 
 // const editor = await User.findById({ _id: id });

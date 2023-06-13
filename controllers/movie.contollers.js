@@ -1,22 +1,38 @@
 import Movie from "../models/Movies.js";
 
 export const createMovie = async (req, res) => {
-  const existingMovie = await Movie.findOne({
-    title: req.body.title,
-  });
+  const { title, released, genre, overview, publisher } = req.body;
 
+  if (!title || !released || !genre || !overview || !publisher) {
+    return res
+      .status(401)
+      .json({ error: "Missing datas. All fields are mandatory." });
+  }
+
+  // avoid duplicate movie by cheking the title
+  const existingMovie = await Movie.findOne({
+    title: title,
+  });
   if (existingMovie) {
-    return res.status(403).json({ error: "Movie already exists." });
+    return res.status(403).json({
+      error: "Movie already exists.",
+      existingMovie: existingMovie.title,
+    });
   }
 
   try {
-    const newMovie = await Movie.create({
-      ...req.body,
-    });
+    // const newMovie = await Movie.create({
+    //   ...req.body,
+    // });
+
+    // create a new Movie
+    const newMovie = new Movie(req.body);
+    await newMovie.save();
+
     res.status(201).json({
       success: true,
       message: "Created movie succesfully.",
-      movie: newMovie,
+      createdMovie: newMovie,
     });
   } catch (err) {
     res.status(500).json({
@@ -37,9 +53,9 @@ export const getAllMovies = async (req, res) => {
 };
 
 export const getMovie = async (req, res) => {
-  const { id } = req.params;
+  const { _id } = req.params;
   try {
-    const movie = await Movie.findById({ _id: id });
+    const movie = await Movie.findById({ _id: _id });
     res.status(200).json({
       success: true,
       message: "Found movie succesfully.",
@@ -56,6 +72,17 @@ export const getMovie = async (req, res) => {
 
 export const deleteMovie = async (req, res) => {
   const { id } = req.params;
-  await Movie.findOneAndDelete({ _id: id });
+  try {
+    await Movie.findOneAndDelete({ _id: id });
+    res
+      .status(204)
+      .send({ success: true, message: "Resource deleted succesfully." });
+  } catch (err) {
+    res.status(410).json({
+      success: false,
+      message: "Resource already deleted.",
+      error: err.message,
+    });
+  }
 };
 

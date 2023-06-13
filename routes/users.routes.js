@@ -10,6 +10,7 @@ const userRouter = Router();
 userRouter.post("/register", verifyExistingSubscriber, signup);
 userRouter.post("/login", login);
 
-
+// server session disconnect process
+// userRouter.delete("/logout", logout);
 
 export default userRouter;
