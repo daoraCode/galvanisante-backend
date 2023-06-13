@@ -55,7 +55,7 @@ export const login = async (req, res) => {
     if (!isMatch) return res.status(401).json({ error: "Incorrect Password." });
 
     const token = jwt.sign({ id: user._id }, process.env.TOKEN_SECRET, {
-      expiresIn: "1800s",
+      expiresIn: "1600s",
     });
 
     return res
@@ -71,10 +71,10 @@ export const login = async (req, res) => {
 };
 
 // logout
-export const logout = (req, res) => {
-  // req.session.destroy()
-  // req.logout()
-  res.status(200).json({ success: "Disconnect succesfull." })
+export const logout = async (req, res) => {
+  res.cookie("token", "", { maxAge: 0 });
+  res.send({ success: true });
+  res.end();
 };
 
 // const getInfo = async (req, res) => {};

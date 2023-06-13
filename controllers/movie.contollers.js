@@ -31,7 +31,7 @@ export const createMovie = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: "Created movie succesfully.",
+      message: "Created movie.",
       createdMovie: newMovie,
     });
   } catch (err) {
@@ -47,7 +47,7 @@ export const getAllMovies = async (req, res) => {
   const movies = await Movie.find();
   res.status(200).json({
     success: true,
-    message: "Found movies succesfully.",
+    message: "Found movies.",
     movieList: movies,
   });
 };
@@ -58,7 +58,7 @@ export const getMovie = async (req, res) => {
     const movie = await Movie.findById({ _id: _id });
     res.status(200).json({
       success: true,
-      message: "Found movie succesfully.",
+      message: "Found movie.",
       movie: movie,
     });
   } catch (err) {
@@ -74,9 +74,7 @@ export const deleteMovie = async (req, res) => {
   const { id } = req.params;
   try {
     await Movie.findOneAndDelete({ _id: id });
-    res
-      .status(204)
-      .send({ success: true, message: "Movie resource deleted succesfully." });
+    res.status(204).send({ success: true, message: "Movie resource deleted." });
   } catch (err) {
     res.status(410).json({
       success: false,

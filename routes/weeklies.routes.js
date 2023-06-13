@@ -5,18 +5,17 @@ import {
   getWeekly,
   createWeekly,
   deleteWeekly,
+  updateWeekly,
 } from "../controllers/weekly.controller.js";
 
 import Weekly from "../models/Weekly.js";
 
 // middlewares
-import { isSubscriberAuthenticated } from "../middlewares/isSubscriber.js";
+import { isSubscriberAuthenticated } from "../middlewares/isUser.js";
 
 import { isAuth } from "../middlewares/isAuth.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
 
-// routes implemented for admin
-// router
 const weeklyRouter = Router();
 
 // @POST
@@ -29,8 +28,7 @@ weeklyRouter.get("/weekly/:_id", isSubscriberAuthenticated, getWeekly);
 // @DELETE
 weeklyRouter.delete("/weekly/:id", isAuth, isAdmin, deleteWeekly);
 
-// UPDATE
 // @PUT
-// weeklyRouter.put("/weekly/:id", updateWeekly);
+weeklyRouter.post("/weekly-update/:id", isAuth, isAdmin, updateWeekly);
 
 export default weeklyRouter;

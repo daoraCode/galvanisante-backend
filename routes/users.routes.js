@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { signup, login, logout } from "../controllers/auth.controller.js";
 
-import { verifyExistingSubscriber } from "../middlewares/isSubscriber.js";
+import { verifyExistingSubscriber } from "../middlewares/isUser.js";
+import { isAuth } from "../middlewares/isAuth.js";
 
-// router
 const userRouter = Router();
 
 // @POST
@@ -14,6 +14,6 @@ userRouter.post("/login", login);
 // userRouter.put("/update/", updateDate)
 
 // server session disconnect process
-// userRouter.delete("/logout", logout);
+userRouter.post("/logout", isAuth, logout);
 
 export default userRouter;

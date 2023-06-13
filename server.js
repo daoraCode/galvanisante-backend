@@ -1,6 +1,8 @@
 import express from "express";
 const app = express();
 
+import cookieParser from "cookie-parser";
+
 import morgan from "morgan";
 import dotenv from "dotenv";
 import connectDatabase from "./config/dbConfig.js";
@@ -25,6 +27,7 @@ app.use(cors());
 app.use(morgan("tiny"));
 app.use(express.json({ limit: "40mb" }));
 app.use(express.urlencoded({ extended: false, limit: "40mb" }));
+app.use(cookieParser());
 
 // Routes and other configurations
 // app.get("/test", (req, res) => {
@@ -35,6 +38,12 @@ app.use(express.urlencoded({ extended: false, limit: "40mb" }));
 app.use("/api/users", userRouter);
 app.use("/api/movies", movieRouter);
 app.use("/api/weeklies", weeklyRouter);
+
+app.get("/set-cookies", (req, res) => {
+  // res.setHeader("Set-Headers", "NewUser=true");
+  res.cookie("New user", true);
+  res.send("you've got cookies");
+});
 
 // Start the server
 app.listen(PORT, () => {

@@ -31,7 +31,7 @@ export const createWeekly = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: "Created weekly succesfully.",
+      message: "Created weekly.",
       createdWeekly: newWeekly,
       editor: newWeekly.editor,
     });
@@ -49,7 +49,7 @@ export const getAllWeeklies = async (req, res) => {
   const weeklies = await Weekly.find();
   res.status(200).json({
     success: true,
-    message: "Weeklies found succesfully.",
+    message: "Weeklies found.",
     weekliesList: weeklies,
   });
 };
@@ -62,7 +62,7 @@ export const getWeekly = async (req, res) => {
     const weekly = await Weekly.findById({ _id: _id });
     res.status(200).json({
       success: true,
-      message: "Weekly found succesfully.",
+      message: "Weekly found.",
       weekly: weekly,
     });
   } catch (err) {
@@ -80,12 +80,32 @@ export const deleteWeekly = async (req, res) => {
     await Weekly.findOneAndDelete({ _id: id });
     res
       .status(204)
-      .send({ success: true, message: "Weekly resource deleted succesfully." });
+      .send({ success: true, message: "Weekly resource deleted." });
   } catch (err) {
     res.status(410).json({
       success: false,
       message: "Weekly resource already deleted.",
       error: err.message,
     });
+  }
+};
+
+export const updateWeekly = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const updatedWeekly = await Weekly.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: { ...req.body },
+      },
+      { new: true }
+    );
+    res.status(204).json({
+      success: true,
+      message: "Weekly resource updated.",
+      updateWeekly: updatedWeekly,
+    });
+  } catch (err) {
+    res.status(400).json({ success: false, error: err.message });
   }
 };
