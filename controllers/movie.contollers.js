@@ -76,11 +76,11 @@ export const deleteMovie = async (req, res) => {
     await Movie.findOneAndDelete({ _id: id });
     res
       .status(204)
-      .send({ success: true, message: "Resource deleted succesfully." });
+      .send({ success: true, message: "Movie resource deleted succesfully." });
   } catch (err) {
     res.status(410).json({
       success: false,
-      message: "Resource already deleted.",
+      message: "Movie resource already deleted.",
       error: err.message,
     });
   }

@@ -52,8 +52,7 @@ export const login = async (req, res) => {
     if (!user) return res.status(404).json({ error: "User not found." });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch)
-      return res.status(401).json({ error: "Password does not match." });
+    if (!isMatch) return res.status(401).json({ error: "Incorrect Password." });
 
     const token = jwt.sign({ id: user._id }, process.env.TOKEN_SECRET, {
       expiresIn: "1800s",
@@ -71,4 +70,11 @@ export const login = async (req, res) => {
   }
 };
 
-const getInfo = async (req, res) => {};
+// logout
+export const logout = (req, res) => {
+  // req.session.destroy()
+  // req.logout()
+  res.status(200).json({ success: "Disconnect succesfull." })
+};
+
+// const getInfo = async (req, res) => {};

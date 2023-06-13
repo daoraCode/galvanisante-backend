@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { signup, login } from "../controllers/auth.controller.js";
+import { signup, login, logout } from "../controllers/auth.controller.js";
 
 import { verifyExistingSubscriber } from "../middlewares/isSubscriber.js";
 
@@ -9,6 +9,9 @@ const userRouter = Router();
 // @POST
 userRouter.post("/register", verifyExistingSubscriber, signup);
 userRouter.post("/login", login);
+
+// @PUT
+// userRouter.put("/update/", updateDate)
 
 // server session disconnect process
 // userRouter.delete("/logout", logout);
