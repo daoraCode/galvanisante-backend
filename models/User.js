@@ -9,10 +9,6 @@ const userSchema = Schema(
       required: true,
       unique: true,
     },
-    usertag: {
-      type: String,
-      unique: true,
-    },
     email: {
       type: String,
       required: true,
