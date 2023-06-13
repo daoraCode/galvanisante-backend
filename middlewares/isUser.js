@@ -1,5 +1,4 @@
 import User from "../models/User.js";
-// for client user
 
 export const verifyExistingSubscriber = async (req, res, next) => {
   const { email } = req.body;
