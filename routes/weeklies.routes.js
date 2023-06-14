@@ -11,7 +11,7 @@ import {
 import Weekly from "../models/Weekly.js";
 
 // middlewares
-import { isSubscriberAuthenticated } from "../middlewares/isUser.js";
+import { isUserAuthenticated } from "../middlewares/isUser.js";
 
 import { isAuth } from "../middlewares/isAuth.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
@@ -22,8 +22,8 @@ const weeklyRouter = Router();
 weeklyRouter.post("/weekly/create-weekly", isAuth, isAdmin, createWeekly);
 
 // @GET
-weeklyRouter.get("/weekly", isSubscriberAuthenticated, getAllWeeklies);
-weeklyRouter.get("/weekly/:_id", isSubscriberAuthenticated, getWeekly);
+weeklyRouter.get("/weekly", isUserAuthenticated, getAllWeeklies);
+weeklyRouter.get("/weekly/:_id", isUserAuthenticated, getWeekly);
 
 // @DELETE
 weeklyRouter.delete("/weekly/:id", isAuth, isAdmin, deleteWeekly);

@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
-export const signup = async (req, res) => {
+export const signUp = async (req, res) => {
   try {
     // hash password
     const password = req.body.password;
@@ -28,7 +28,7 @@ export const signup = async (req, res) => {
   }
 };
 
-export const login = async (req, res) => {
+export const logIn = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -70,8 +70,16 @@ export const login = async (req, res) => {
   }
 };
 
+export const getMe = async (req, res) => {
+  if (req.user) {
+    res.json(req.user);
+  } else {
+    res.status(401).json({ error: "Unauthorized." });
+  }
+};
+
 // logout
-export const logout = async (req, res) => {
+export const logOut = async (req, res) => {
   res.cookie("token", "", { maxAge: 0 });
   res.send({ success: true });
   res.end();

@@ -1,19 +1,24 @@
 import { Router } from "express";
-import { signup, login, logout } from "../controllers/auth.controller.js";
+import {
+  signUp,
+  logIn,
+  getMe,
+  logOut,
+} from "../controllers/auth.controller.js";
 
-import { verifyExistingSubscriber } from "../middlewares/isUser.js";
+import { verifyExistingUser } from "../middlewares/isUser.js";
 import { isAuth } from "../middlewares/isAuth.js";
 
 const userRouter = Router();
 
-// @POST
-userRouter.post("/register", verifyExistingSubscriber, signup);
-userRouter.post("/login", login);
+// POST
+userRouter.post("/auth/signup", verifyExistingUser, signUp);
+userRouter.post("/auth/login", logIn);
 
-// @PUT
-// userRouter.put("/update/", updateDate)
+// GET
+userRouter.get("/me", isAuth, getMe);
 
-// server session disconnect process
-userRouter.post("/logout", isAuth, logout);
+// server session disconnection process
+userRouter.post("/auth/logout", isAuth, logOut);
 
 export default userRouter;

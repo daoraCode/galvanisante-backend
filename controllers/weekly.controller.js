@@ -22,10 +22,6 @@ export const createWeekly = async (req, res) => {
     });
   }
   try {
-    // const newWeekly = await Weekly.create({
-    // ...req.body,
-    // });
-
     const newWeekly = new Weekly(req.body);
     await newWeekly.save();
 

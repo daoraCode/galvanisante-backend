@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 
-export const verifyExistingSubscriber = async (req, res, next) => {
+export const verifyExistingUser = async (req, res, next) => {
   const { email } = req.body;
   const user = await User.findOne({ email: email });
   if (user) {
@@ -14,10 +14,10 @@ export const verifyExistingSubscriber = async (req, res, next) => {
   }
 };
 
-export const isSubscriberAuthenticated = async (req, res, next) => {
+export const isUserAuthenticated = async (req, res, next) => {
   if (req.user) {
     next();
   } else {
-    res.status(403).json({ error: "Forbidden" });
+    res.status(403).json({ error: "Forbidden." });
   }
 };

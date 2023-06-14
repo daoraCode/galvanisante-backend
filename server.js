@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: false, limit: "40mb" }));
 // });
 
 // routes
-app.use("/api/users", userRouter);
+app.use("/api/user", userRouter);
 app.use("/api/movies", movieRouter);
 app.use("/api/weeklies", weeklyRouter);
 
