@@ -21,22 +21,23 @@ const PORT = process.env.PORT || 5000;
 connectDatabase();
 
 // middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.ALLOWED_DOMAIN,
+    credentials: true,
+  })
+);
+app.use(express.static("public"));
 app.use(morgan("tiny"));
 app.use(express.json({ limit: "40mb" }));
 app.use(express.urlencoded({ extended: false, limit: "40mb" }));
-
-// Routes and other configurations
-// app.get("/test", (req, res) => {
-//   console.log("Hello");
-// });
 
 // routes
 app.use("/api/user", userRouter);
 app.use("/api/movies", movieRouter);
 app.use("/api/weeklies", weeklyRouter);
 
-// Start the server
+// server port
 app.listen(PORT, () => {
   console.log(`Server is running at port ${PORT}`);
 });

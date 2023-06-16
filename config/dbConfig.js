@@ -6,7 +6,7 @@ async function connectDatabase() {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log("CONNECTED TO THE DATABASE");
+    console.log("CONNECTED TO DATABASE");
   } catch (error) {
     console.error("Failed to connect to MongoDB:", error);
   }
