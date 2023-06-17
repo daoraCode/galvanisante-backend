@@ -4,6 +4,8 @@ const app = express();
 import morgan from "morgan";
 import dotenv from "dotenv";
 import connectDatabase from "./config/dbConfig.js";
+
+// enable domain communication
 import cors from "cors";
 
 // routes
@@ -27,6 +29,7 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(express.static("public"));
 app.use(morgan("tiny"));
 app.use(express.json({ limit: "40mb" }));
