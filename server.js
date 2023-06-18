@@ -11,7 +11,9 @@ import cors from "cors";
 // routes
 import userRouter from "./routes/users.routes.js";
 import movieRouter from "./routes/movies.routes.js";
-import blogRouter from "./routes/blogs.routes.js";
+import memoryRouter from "./routes/memory.routes.js";
+// uplaod images
+import multer from "multer";
 
 // load environment variables
 dotenv.config();
@@ -30,15 +32,20 @@ app.use(
   })
 );
 
+// acces path to directory public
 app.use(express.static("public"));
+const upload = multer({ dest: "public/uploads/" });
+
+// morgan
 app.use(morgan("tiny"));
+
 app.use(express.json({ limit: "40mb" }));
 app.use(express.urlencoded({ extended: false, limit: "40mb" }));
 
 // routes
 app.use("/api/user", userRouter);
 app.use("/api/movies", movieRouter);
-app.use("/api/blogs", blogRouter);
+app.use("/api/memories", memoryRouter);
 
 // server port
 app.listen(PORT, () => {

@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const blogSchema = Schema(
+const memorySchema = Schema(
   {
     theme: {
       type: String,
@@ -15,7 +15,7 @@ const blogSchema = Schema(
       type: String,
       required: true,
     },
-    author: {
+    creator: {
       type: Schema.Types.ObjectId,
       ref: "User",
       // required: true,
@@ -26,20 +26,20 @@ const blogSchema = Schema(
   }
 );
 
-blogSchema.post("findOneAndDelete", async function (blog) {
+memorySchema.post("findOneAndDelete", async function (memory) {
   await model("User").findByIdAndUpdate(
-    { _id: blog.author },
-    { $pull: { weeklies: blog._id } }
+    { _id: memory.creator },
+    { $pull: { memories: memory._id } }
   );
 });
 
-blogSchema.post("save", async function (blog) {
+memorySchema.post("save", async function (memory) {
   // await
   await model("User").findByIdAndUpdate(
-    { _id: blog.editor },
-    { $push: { blogs: blog._id } }
+    { _id: memory.creator },
+    { $push: { memory: memory._id } }
   );
 });
 
-const Blog = model("Blog", blogSchema);
-export default Blog;
+const Memory = model("Memory", memorySchema);
+export default Memory;

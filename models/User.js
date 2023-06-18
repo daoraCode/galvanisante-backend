@@ -27,10 +27,10 @@ const userSchema = Schema(
       type: Boolean,
       default: false,
     },
-    blogs: [
+    memories: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Blog",
+        ref: "Memory",
       },
     ],
     movies: [
