@@ -5,32 +5,32 @@ const userSchema = Schema(
     username: {
       type: String,
       minlength: 4,
-      maxlength: 10,
+      maxlength: 9,
       required: true,
       unique: true,
     },
     email: {
       type: String,
-      required: true,
       lowercase: true,
       trim: true,
+      required: true,
       unique: true,
     },
     password: {
       type: String,
-      required: true,
-      trim: true,
-      min: 4,
+      min: 7,
       max: 9,
+      trim: true,
+      required: true,
     },
     isAdmin: {
       type: Boolean,
       default: false,
     },
-    weeklies: [
+    blogs: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Weekly",
+        ref: "Blog",
       },
     ],
     movies: [

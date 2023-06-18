@@ -11,7 +11,7 @@ import cors from "cors";
 // routes
 import userRouter from "./routes/users.routes.js";
 import movieRouter from "./routes/movies.routes.js";
-import weeklyRouter from "./routes/weeklies.routes.js";
+import blogRouter from "./routes/blogs.routes.js";
 
 // load environment variables
 dotenv.config();
@@ -38,7 +38,7 @@ app.use(express.urlencoded({ extended: false, limit: "40mb" }));
 // routes
 app.use("/api/user", userRouter);
 app.use("/api/movies", movieRouter);
-app.use("/api/weeklies", weeklyRouter);
+app.use("/api/blogs", blogRouter);
 
 // server port
 app.listen(PORT, () => {
