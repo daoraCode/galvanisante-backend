@@ -32,11 +32,11 @@ export const logIn = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    if (!email || !password) {
-      return res
-        .status(401)
-        .json({ error: "Required email and password for login." });
-    }
+    // if (!email || !password) {
+    //   return res
+    //     .status(401)
+    //     .json({ error: "Required email and password for login." });
+    // }
 
     // verify if user exists
     const foundUser = await User.findOne({ email });
@@ -48,7 +48,6 @@ export const logIn = async (req, res) => {
     }
 
     const user = await User.findOne({ email: email });
-
     if (!user) return res.status(404).json({ error: "User not found." });
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -57,10 +56,10 @@ export const logIn = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1600s",
     });
-
-    return res
-      .status(200)
-      .json({ success: true, message: "Login successful.", data: token });
+    res.json(token);
+    // return res
+    //   .status(200)
+    //   .json({ success: true, message: "Login successful.", data: token });
   } catch (err) {
     res.status(500).json({
       success: false,
