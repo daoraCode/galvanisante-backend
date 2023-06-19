@@ -2,6 +2,9 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
+// import express from "express"
+// const cookie = express.c
+
 export const signUp = async (req, res) => {
   try {
     // hash password
@@ -56,7 +59,7 @@ export const logIn = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1600s",
     });
-    res.json(token);
+    res.cookie("token", token).json("ok");
     // return res
     //   .status(200)
     //   .json({ success: true, message: "Login successful.", data: token });
