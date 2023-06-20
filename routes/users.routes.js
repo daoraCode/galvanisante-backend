@@ -59,8 +59,8 @@ userRouter.get("/auth/me", (req, res) => {
 // });
 
 userRouter.post("/auth/logout", (req, res) => {
-  res.clearCookie("token"); // Clear the token cookie
-  res.json("Fine!"); // Send the response
+  res.clearCookie("token");
+  res.json("Fine!");
 });
 
 
