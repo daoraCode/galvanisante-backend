@@ -1,6 +1,9 @@
 import express from "express";
 const app = express();
 
+// enable to parse browser cookie data for token informations
+import cookieParser from "cookie-parser";
+
 import morgan from "morgan";
 import dotenv from "dotenv";
 import connectDatabase from "./config/dbConfig.js";
@@ -41,6 +44,8 @@ app.use(morgan("tiny"));
 
 app.use(express.json({ limit: "40mb" }));
 app.use(express.urlencoded({ extended: false, limit: "40mb" }));
+
+app.use(cookieParser());
 
 // routes
 app.use("/api/user", userRouter);

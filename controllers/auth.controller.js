@@ -1,9 +1,9 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+// import cookieParser from "cookie-parser";
 
-// import express from "express"
-// const cookie = express.c
+// import
 
 export const signUp = async (req, res) => {
   try {
@@ -81,10 +81,17 @@ export const getMe = async (req, res) => {
 };
 
 // logout
-export const logOut = async (req, res) => {
-  res.cookie("token", "", { maxAge: 0 });
-  res.send({ success: true });
-  res.end();
-};
+// export const logOut = (req, res) => {
+//   // if ()
+//   req.cookie("token", "").json("Fine!");
+// };
 
-// const getInfo = async (req, res) => {};
+// // profile
+// export const getProfile = async (req, res) => {
+//   const { token } = req.cookies;
+//   const verifyToken = await jwt.verify('token', process.env.JWT_SECRET, {}, (err, info) => {
+//     if (err) throw err;
+//     res.json(verifyToken)
+//   })
+//   res.json(verifyToken)
+// };
