@@ -19,6 +19,7 @@ import jwt from "jsonwebtoken";
 // cookie-parser
 import cookieParser from "cookie-parser";
 import User from "../models/User.js";
+import { isAdmin } from "../middlewares/isAdmin.js";
 
 const userRouter = express.Router();
 const app = express();
@@ -30,7 +31,7 @@ userRouter.post("/auth/signup", verifyExistingUser, signUp);
 userRouter.post("/auth/login", logIn);
 
 // user's profile
-userRouter.get("/me", (req, res) => {
+userRouter.get("/auth/me", (req, res) => {
   const { token } = req.cookies;
   const verifyToken = jwt.verify(
     token,
@@ -41,6 +42,7 @@ userRouter.get("/me", (req, res) => {
       res.json(info);
     }
   );
+  res.json(verifyToken);
   // find one user
   // const registeredUser = User.find0ne({ email: email });
   // if (!registeredUser) {
@@ -49,15 +51,17 @@ userRouter.get("/me", (req, res) => {
   //   res.json(registeredUser);
   // }
   // res send le user
-  res.json(verifyToken);
 });
 
-// server session disconnection process
-// userRouter.post("/auth/logout", logOut);
+// userRouter.post("/auth/logout", (req, res) => {
+//   // const { token } = req.cookies;
+//   res.cookie(token, "").json("Fine!");
+// });
 
 userRouter.post("/auth/logout", (req, res) => {
-  const { token } = req.cookies;
-  res.cookie(token, "").json("Fine!");
+  res.clearCookie("token"); // Clear the token cookie
+  res.json("Fine!"); // Send the response
 });
+
 
 export default userRouter;
