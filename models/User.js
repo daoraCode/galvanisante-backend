@@ -26,18 +26,18 @@ const userSchema = Schema(
       type: Boolean,
       default: false,
     },
-    memories: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Memory",
-      },
-    ],
-    movies: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Movie",
-      },
-    ],
+    // memories: [
+    //   {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Memory",
+    //   },
+    // ],
+    // movies: [
+    //   {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Movie",
+    //   },
+    // ],
     token: {
       type: String,
     },

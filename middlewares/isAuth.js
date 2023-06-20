@@ -4,8 +4,6 @@ export const isAuth = async (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1]; // extract the token from header
     req.user = await jwt.verify(token, process.env.JWT_SECRET); // verify the token
-    console.log(req.user);
-    // move to the next function/middleware
     next();
   } catch (err) {
     console.log(err);

@@ -21,10 +21,17 @@ export const createMemory = async (req, res) => {
       oldMemory: existingMemory.theme,
     });
   }
-  try {
-    const newMemory = new Memory(req.body);
-    await newMemory.save();
 
+  try {
+    const newMemory = new Memory();
+    newMemory.theme = req.body.theme;
+    newMemory.content = req.body.content;
+    newMemory.creator = req.user.id;
+
+    console.log(newMemory);
+
+    await newMemory.save();
+    
     res.status(201).json({
       success: true,
       message: "Created Memory.",
