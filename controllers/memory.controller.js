@@ -5,19 +5,19 @@ export const createMemory = async (req, res) => {
   const { id } = req.params;
   const { theme, presentation, content } = req.body;
 
-  const existingMemory = await Memory.findOne({
-    theme: theme,
-  });
-
-  if (existingMemory) {
-    return res.status(403).json({
-      success: false,
-      message: "Memory already exists.",
-      oldMemory: existingMemory.theme,
-    });
-  }
-
   try {
+    const existingMemory = await Memory.findOne({
+      theme: theme,
+    });
+
+    if (existingMemory) {
+      return res.status(403).json({
+        success: false,
+        message: "Memory already exists.",
+        oldMemory: existingMemory.theme,
+      });
+    }
+
     const newMemory = new Memory();
 
     // req.body = user's form input content filled !!
@@ -77,14 +77,25 @@ export const getMemory = async (req, res) => {
 export const deleteMemory = async (req, res) => {
   const { id } = req.params;
   try {
-    await Memory.findOneAndDelete({ _id: id });
-    res
-      .status(204)
-      .send({ success: true, message: "Memory resource deleted." });
+    const result = await Memory.findOneAndDelete({
+      _id: id,
+      creator: req.user.id,
+    });
+
+    if (result != null) {
+      res
+        .status(204)
+        .send({ success: true, message: "Memory resource deleted" });
+    } else {
+      return res.status(403).json({
+        success: false,
+        message: "This not your memory",
+      });
+    }
   } catch (err) {
-    res.status(410).json({
+    res.status(500).json({
       success: false,
-      message: "Memory resource already deleted.",
+      message: "Error occured",
       error: err.message,
     });
   }
