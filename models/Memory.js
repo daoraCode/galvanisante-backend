@@ -5,12 +5,13 @@ const memorySchema = Schema(
     theme: {
       type: String,
       required: true,
+      // unique: true
     },
-    // presentation: {
-    //   type: String,
-    //   default: "",
-    //   required: true,
-    // },
+    presentation: {
+      type: String,
+      default: "",
+      // required: true,
+    },
     content: {
       type: String,
       required: true,

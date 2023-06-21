@@ -19,8 +19,10 @@ export const createMemory = async (req, res) => {
 
   try {
     const newMemory = new Memory();
-    // req.body = user's form input content filled
+
+    // req.body = user's form input content filled !!
     newMemory.theme = req.body.theme;
+    newMemory.presentation = req.body.presentation;
     newMemory.content = req.body.content;
     newMemory.creator = req.user.id;
 
@@ -98,6 +100,7 @@ export const updateMemory = async (req, res) => {
       },
       { new: true }
     );
+    console.log(updatedMemory);
     res.status(204).json({
       success: true,
       message: "Memory resource updated.",
