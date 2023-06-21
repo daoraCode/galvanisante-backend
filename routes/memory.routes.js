@@ -21,11 +21,11 @@ const MemoryRouter = Router();
 MemoryRouter.post("/memory/create", isAuth, createMemory);
 
 // @GET
-MemoryRouter.get("/memory", isUserAuthenticated, getAllMemories);
+MemoryRouter.get("/memory", isAuth, getAllMemories);
 MemoryRouter.get("/memory/:_id", isUserAuthenticated, getMemory);
 
 // @DELETE
-MemoryRouter.delete("/memory/:id", isAuth, deleteMemory);
+MemoryRouter.delete("/memory/delete/:id", isAuth, deleteMemory);
 
 // @PUT
 MemoryRouter.post("/memory/update/:id", isAuth, updateMemory);

@@ -46,7 +46,7 @@ export const createMemory = async (req, res) => {
 
 // get all published memories from admin db
 export const getAllMemories = async (req, res) => {
-  const memories = await Memory.find();
+  const memories = await Memory.find({});
   res.status(200).json({
     success: true,
     message: "Memories found.",
