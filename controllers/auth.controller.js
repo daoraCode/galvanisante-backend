@@ -14,7 +14,12 @@ export const signUp = async (req, res) => {
     req.body.password = hash; // password hashed
 
     // creates a new user
-    const newUser = new User(req.body);
+    const newUser = new User();
+    newUser.username = req.body.username;
+    newUser.email = req.body.email;
+    newUser.password = req.body.password;
+
+    console.log(newUser);
     await newUser.save();
 
     res.status(201).json({
@@ -35,12 +40,6 @@ export const logIn = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // if (!email || !password) {
-    //   return res
-    //     .status(401)
-    //     .json({ error: "Required email and password for login." });
-    // }
-
     // verify if user exists
     const foundUser = await User.findOne({ email });
     if (!foundUser) {
@@ -60,19 +59,11 @@ export const logIn = async (req, res) => {
       expiresIn: "1600s",
     });
 
-    // res.status(200).json({
-    //   id: user._id,
-    //   user: user.username,
-    //   token: user.token,
-    // });
-    // res.cookie("token", token).json({
-    //   id: user._id,
-    //   user: user.username,
-    //   token: user.token,
-    // });
-    return res
-      .status(200)
-      .json({ success: true, message: "Login successful.", data: token });
+    res.cookie("token", token).json({
+      id: user._id,
+      user: user.username,
+      // token: user.token,
+    });
   } catch (err) {
     res.status(500).json({
       success: false,

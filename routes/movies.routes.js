@@ -13,7 +13,7 @@ import { isAuth } from "../middlewares/isAuth.js";
 import { isUserAuthenticated } from "../middlewares/isUser.js";
 
 // @POST
-movieRouter.post("/movie/create-movie", isAuth, createMovie);
+movieRouter.post("/movie/create", isAuth, createMovie);
 
 // @GET
 movieRouter.get("/movie", isUserAuthenticated, getAllMovies);

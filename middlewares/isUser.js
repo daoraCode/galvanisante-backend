@@ -2,12 +2,12 @@ import User from "../models/User.js";
 
 export const verifyExistingUser = async (req, res, next) => {
   const { email } = req.body;
-  const user = await User.findOne({ email: email });
-  if (user) {
+  const existingEmail = await User.findOne({ email: email });
+  if (existingEmail) {
     res.status(409).json({
       success: false,
-      message: "User already exists.",
-      oldUser: user.email,
+      message: "Not found or already exists.",
+      oldUser: existingEmail,
     });
   } else {
     next();

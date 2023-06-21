@@ -23,7 +23,6 @@ import { isAdmin } from "../middlewares/isAdmin.js";
 
 const userRouter = express.Router();
 const app = express();
-
 app.use(cookieParser());
 
 // POST
@@ -43,14 +42,6 @@ userRouter.get("/auth/me", (req, res) => {
     }
   );
   res.json(verifyToken);
-  // find one user
-  // const registeredUser = User.find0ne({ email: email });
-  // if (!registeredUser) {
-  //   res.send(500);
-  // } else {
-  //   res.json(registeredUser);
-  // }
-  // res send le user
 });
 
 // userRouter.post("/auth/logout", (req, res) => {
@@ -59,8 +50,8 @@ userRouter.get("/auth/me", (req, res) => {
 // });
 
 userRouter.post("/auth/logout", (req, res) => {
-  res.clearCookie("token");
-  res.json("Fine!");
+  res.clearCookie("token"); // Clear the token cookie
+  res.json("Fine!"); // Send the response
 });
 
 

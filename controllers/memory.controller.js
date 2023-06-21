@@ -5,13 +5,8 @@ export const createMemory = async (req, res) => {
   const { id } = req.params;
   const { theme, presentation, content } = req.body;
 
-  if (!theme || !presentation || !content)
-    return res
-      .status(401)
-      .json({ error: "Missing datas. All fields are mandatory." });
-
   const existingMemory = await Memory.findOne({
-    theme: req.body.theme,
+    theme: theme,
   });
 
   if (existingMemory) {
@@ -24,19 +19,19 @@ export const createMemory = async (req, res) => {
 
   try {
     const newMemory = new Memory();
+    // req.body = user's form input content filled
     newMemory.theme = req.body.theme;
     newMemory.content = req.body.content;
     newMemory.creator = req.user.id;
 
     console.log(newMemory);
-
     await newMemory.save();
-    
+
     res.status(201).json({
       success: true,
       message: "Created Memory.",
       createdMemory: newMemory,
-      editor: newMemory.creator,
+      creator: newMemory.creator,
     });
   } catch (err) {
     res.status(500).json({

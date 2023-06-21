@@ -1,4 +1,4 @@
-import { Schema, SchemaTypes, model } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const userSchema = Schema(
   {
@@ -26,18 +26,6 @@ const userSchema = Schema(
       type: Boolean,
       default: false,
     },
-    // memories: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Memory",
-    //   },
-    // ],
-    // movies: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Movie",
-    //   },
-    // ],
     token: {
       type: String,
     },
