@@ -6,7 +6,7 @@ import fs from "fs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const uploadMiddleware = multer({ dest: "public/" });
+const uploadMiddleware = multer({ dest: "public" });
 
 import {
   getAllMemories,
@@ -40,7 +40,7 @@ MemoryRouter.post(
     const newPath = path + "." + ext;
     fs.renameSync(path, newPath);
 
-    const { theme, presentation, content } = req.body;
+    const { theme, file, content } = req.body;
 
     try {
       const existingMemory = await Memory.findOne({
@@ -57,7 +57,7 @@ MemoryRouter.post(
 
       const newMemory = await Memory.create({
         theme,
-        presentation: newPath,
+        file: newPath,
         content,
         creator: req.user.id,
       });

@@ -41,13 +41,13 @@ export const logIn = async (req, res) => {
     const { email, password } = req.body;
 
     // verify if user exists
-    const foundUser = await User.findOne({ email });
-    if (!foundUser) {
-      return res.status(400).json({
-        success: false,
-        error: "User already exists.",
-      });
-    }
+    // const foundUser = await User.findOne({ email });
+    // if (!foundUser) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     error: "Error. Wrong password.",
+    //   });
+    // }
 
     const user = await User.findOne({ email: email });
     if (!user) return res.status(404).json({ error: "User not found." });
@@ -64,7 +64,6 @@ export const logIn = async (req, res) => {
       user: user.username,
       token: token,
     });
-
   } catch (err) {
     res.status(500).json({
       success: false,

@@ -7,7 +7,7 @@ const memorySchema = Schema(
       required: true,
       // unique: true
     },
-    presentation: {
+    file: {
       type: String,
       default: "",
       // required: true,

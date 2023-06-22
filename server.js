@@ -42,8 +42,8 @@ const upload = multer({ dest: "public/" });
 // morgan
 app.use(morgan("tiny"));
 
-// app.use(express.json({ limit: "40mb" })
-app.use(express.json());
+// app.use(express.json());
+app.use(express.json())
 // app.use(express.urlencoded());
 
 app.use(cookieParser());
