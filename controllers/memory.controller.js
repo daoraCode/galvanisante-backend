@@ -1,6 +1,20 @@
 import Memory from "../models/Memory.js";
 import User from "../models/User.js";
 
+import multer from "multer";
+
+// Multer configuration
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/"); // Specify the folder where you want to save the uploaded files
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname); // Generate a unique filename for each uploaded file
+  },
+});
+
+const upload = multer({ storage });
+
 export const createMemory = async (req, res) => {
   const { id } = req.params;
   const { theme, presentation, content } = req.body;
