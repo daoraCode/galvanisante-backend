@@ -1,62 +1,61 @@
 import Memory from "../models/Memory.js";
 import User from "../models/User.js";
 
-import multer from "multer";
 
 // Multer configuration
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/"); // Specify the folder where you want to save the uploaded files
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname); // Generate a unique filename for each uploaded file
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "uploads/"); // Specify the folder where you want to save the uploaded files
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, Date.now() + "-" + file.originalname); // Generate a unique filename for each uploaded file
+//   },
+// });
 
-const upload = multer({ storage });
+// const upload = multer({ storage });
 
-export const createMemory = async (req, res) => {
-  const { id } = req.params;
-  const { theme, presentation, content } = req.body;
+// export const createMemory = async (req, res) => {
+//   const { id } = req.params;
+//   const { theme, presentation, content } = req.body;
 
-  try {
-    const existingMemory = await Memory.findOne({
-      theme: theme,
-    });
+//   try {
+//     const existingMemory = await Memory.findOne({
+//       theme: theme,
+//     });
 
-    if (existingMemory) {
-      return res.status(403).json({
-        success: false,
-        message: "Memory already exists.",
-        oldMemory: existingMemory.theme,
-      });
-    }
+//     if (existingMemory) {
+//       return res.status(403).json({
+//         success: false,
+//         message: "Memory already exists.",
+//         oldMemory: existingMemory.theme,
+//       });
+//     }
 
-    const newMemory = new Memory();
+//     const newMemory = new Memory();
 
-    // req.body = user's form input content filled !!
-    newMemory.theme = req.body.theme;
-    newMemory.presentation = req.body.presentation;
-    newMemory.content = req.body.content;
-    newMemory.creator = req.user.id;
+//     // req.body = user's form input content filled !!
+//     newMemory.theme = req.body.theme;
+//     newMemory.presentation = req.body.presentation;
+//     newMemory.content = req.body.content;
+//     newMemory.creator = req.user.id;
 
-    console.log(newMemory);
-    await newMemory.save();
+//     console.log(newMemory);
+//     await newMemory.save();
 
-    res.status(201).json({
-      success: true,
-      message: "Created Memory.",
-      createdMemory: newMemory,
-      creator: newMemory.creator,
-    });
-  } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: "Error occurred. Memory not created.",
-      error: err.message,
-    });
-  }
-};
+//     res.status(201).json({
+//       success: true,
+//       message: "Created Memory.",
+//       createdMemory: newMemory,
+//       creator: newMemory.creator,
+//     });
+//   } catch (err) {
+//     res.status(500).json({
+//       success: false,
+//       message: "Error occurred. Memory not created.",
+//       error: err.message,
+//     });
+//   }
+// };
 
 // get all published memories from admin db
 export const getAllMemories = async (req, res) => {
@@ -70,10 +69,11 @@ export const getAllMemories = async (req, res) => {
 
 // get a unique Memory by its id
 export const getMemory = async (req, res) => {
-  const { _id } = req.params;
+  // const { _id } = req.params;
+  const { id } = req.params; // <-- !!
 
   try {
-    const memory = await Memory.findById({ _id: _id });
+    const memory = await Memory.findById({ _id: id });
     res.status(200).json({
       success: true,
       message: "Memory found.",
