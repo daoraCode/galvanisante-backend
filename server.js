@@ -37,7 +37,7 @@ app.use(
 
 // acces path to directory public
 app.use(express.static("public"));
-const upload = multer({ dest: "public/uploads/" });
+const upload = multer({ dest: "public/" });
 
 // morgan
 app.use(morgan("tiny"));

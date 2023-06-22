@@ -6,7 +6,7 @@ import fs from "fs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const uploadMiddleware = multer({ dest: "uploads/" });
+const uploadMiddleware = multer({ dest: "public/" });
 
 import {
   getAllMemories,
@@ -33,14 +33,13 @@ MemoryRouter.post(
   isAuth,
   uploadMiddleware.single("file"),
   async (req, res) => {
-    // console.log("35", req.files.file);
+    // renaming files
     const { originalname, path } = req.file;
     const parts = originalname.split(".");
     const ext = parts[parts.length - 1];
     const newPath = path + "." + ext;
     fs.renameSync(path, newPath);
 
-    // const { id } = req.params;
     const { theme, presentation, content } = req.body;
 
     try {
@@ -72,15 +71,13 @@ MemoryRouter.post(
       // newMemory.content = req.body.content;
       // newMemory.creator = req.user.id;
 
-      // console.log(newMemory);
-      // await newMemory.save();
-
       res.status(201).json({
         success: true,
         message: "Created Memory.",
         createdMemory: newMemory,
         creator: newMemory.creator,
       });
+      console.log("80", newMemory);
     } catch (err) {
       res.status(500).json({
         success: false,
