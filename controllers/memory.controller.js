@@ -16,7 +16,7 @@ import User from "../models/User.js";
 
 // export const createMemory = async (req, res) => {
 //   const { id } = req.params;
-//   const { theme, presentation, content } = req.body;
+//   const { theme, cover, content } = req.body;
 
 //   try {
 //     const existingMemory = await Memory.findOne({
@@ -35,7 +35,7 @@ import User from "../models/User.js";
 
 //     // req.body = user's form input content filled !!
 //     newMemory.theme = req.body.theme;
-//     newMemory.presentation = req.body.presentation;
+//     newMemory.cover = req.body.cover;
 //     newMemory.content = req.body.content;
 //     newMemory.creator = req.user.id;
 
@@ -59,64 +59,37 @@ import User from "../models/User.js";
 
 // get all published memories from admin db
 export const getAllMemories = async (req, res) => {
-  const memories = await Memory.find({});
+  const memories = await Memory.find({})
   res.status(200).json({
     success: true,
-    message: "Memories found.",
-    memoryList: memories,
-  });
-};
+    message: "Memories found",
+    memoriesList: memories,
+  })
+}
 
 // get a unique Memory by its id
 export const getMemory = async (req, res) => {
   // const { _id } = req.params;
-  const { id } = req.params; // <-- !!
+  const { id } = req.params // <-- !!
 
   try {
-    const memory = await Memory.findById({ _id: id });
+    const memory = await Memory.findById({ _id: id })
     res.status(200).json({
       success: true,
-      message: "Memory found.",
+      message: "Memory found",
       memory: memory,
-    });
+    })
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: "Error. Not found Memory.",
+      message: "Error. Not found Memory",
       error: err.message,
-    });
+    })
   }
-};
-
-export const deleteMemory = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const result = await Memory.findOneAndDelete({
-      _id: id,
-      creator: req.user.id,
-    });
-
-    if (result != null) {
-      res
-        .status(204)
-        .send({ success: true, message: "Memory resource deleted" });
-    } else {
-      return res.status(403).json({
-        success: false,
-        message: "This not your memory",
-      });
-    }
-  } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: "Error occured",
-      error: err.message,
-    });
-  }
-};
+}
 
 export const updateMemory = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.params
   try {
     const updatedMemory = await Memory.findOneAndUpdate(
       { _id: id },
@@ -124,14 +97,41 @@ export const updateMemory = async (req, res) => {
         $set: { ...req.body },
       },
       { new: true }
-    );
-    console.log(updatedMemory);
-    res.status(204).json({
+    )
+    console.log(updatedMemory)
+    res.status(200).json({
       success: true,
-      message: "Memory resource updated.",
+      message: "Resource updated succesfull",
       updateMemory: updatedMemory,
-    });
+    })
   } catch (err) {
-    res.status(400).json({ success: false, error: err.message });
+    res.status(400).json({ success: false, error: err.message })
   }
-};
+}
+
+export const deleteMemory = async (req, res) => {
+  const { id } = req.params
+  try {
+    const result = await Memory.findOneAndDelete({
+      _id: id,
+      creator: req.user.id,
+    })
+
+    if (result != null) {
+      res
+        .status(204)
+        .send({ success: true, message: "Memory resource deleted" })
+    } else {
+      return res.status(403).json({
+        success: false,
+        message: "This not your memory",
+      })
+    }
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Error occured",
+      error: err.message,
+    })
+  }
+}

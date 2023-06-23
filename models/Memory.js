@@ -5,13 +5,8 @@ const memorySchema = Schema(
     theme: {
       type: String,
       required: true,
-      // unique: true
     },
-    file: {
-      type: String,
-      default: "",
-      // required: true,
-    },
+    cover: { type: String },
     content: {
       type: String,
       required: true,
@@ -21,7 +16,7 @@ const memorySchema = Schema(
   {
     timestamps: true,
   }
-);
+)
 
 const Memory = model("Memory", memorySchema);
 export default Memory;

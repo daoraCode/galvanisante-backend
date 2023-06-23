@@ -23,7 +23,7 @@ import { isAdmin } from "../middlewares/isAdmin.js";
 
 const userRouter = express.Router();
 const app = express();
-app.use(cookieParser());
+// app.use(cookieParser());
 
 // POST
 userRouter.post("/auth/signup", verifyExistingUser, signUp);
@@ -50,8 +50,8 @@ userRouter.get("/auth/me", (req, res) => {
 // });
 
 userRouter.post("/auth/logout", (req, res) => {
-  res.clearCookie("token"); // Clear the token cookie
-  res.json("Fine!"); // Send the response
+  res.clearCookie("token") // Clear the token cookie
+  res.status(200).json({ message: "Fine!" }) // Send the response
 });
 
 

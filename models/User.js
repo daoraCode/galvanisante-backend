@@ -17,9 +17,9 @@ const userSchema = Schema(
     },
     password: {
       type: String,
-      min: 7,
+      min: 3,
       max: 9,
-      trim: true,
+      // trim: true,
       required: true,
     },
     isAdmin: {
@@ -33,7 +33,7 @@ const userSchema = Schema(
   {
     timestamps: true,
   }
-);
+)
 
 // user model
 const User = model("User", userSchema);

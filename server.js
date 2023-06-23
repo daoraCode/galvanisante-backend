@@ -1,31 +1,24 @@
 import express from "express";
-const app = express();
-
-// enable to parse browser cookie data for token informations
-import cookieParser from "cookie-parser";
-
-import morgan from "morgan";
-import dotenv from "dotenv";
-import connectDatabase from "./config/dbConfig.js";
-
-// enable domain communication
-import cors from "cors";
-
+const app = express()
+import morgan from "morgan"
+import dotenv from "dotenv"
+import connectDatabase from "./config/dbConfig.js"
+import cors from "cors"
 // routes
-import userRouter from "./routes/users.routes.js";
-import movieRouter from "./routes/movies.routes.js";
-import memoryRouter from "./routes/memory.routes.js";
+import userRouter from "./routes/users.routes.js"
+import movieRouter from "./routes/movies.routes.js"
+import memoryRouter from "./routes/memory.routes.js"
 // uplaod images
-import multer from "multer";
+// import multer from "multer";
 
-// load environment variables
-dotenv.config();
+// environment variables
+dotenv.config()
 
 // port
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000
 
 // connect to database
-connectDatabase();
+connectDatabase()
 
 // middleware
 app.use(
@@ -33,20 +26,13 @@ app.use(
     origin: process.env.ALLOWED_DOMAIN,
     credentials: true,
   })
-);
-
-// acces path to directory public
-app.use(express.static("public"));
-const upload = multer({ dest: "public/" });
-
-// morgan
-app.use(morgan("tiny"));
-
-// app.use(express.json());
+)
 app.use(express.json())
-// app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }))
+app.use(morgan("tiny"))
 
-app.use(cookieParser());
+  
+
 
 // routes
 app.use("/api/users", userRouter);

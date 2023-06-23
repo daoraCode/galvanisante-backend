@@ -1,3 +1,4 @@
 {
-  "bracketSameLine": false
+  "bracketSameLine": false,
+  "semi": false
 }
