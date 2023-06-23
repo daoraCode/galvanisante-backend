@@ -49,21 +49,19 @@ export const logIn = async (req, res) => {
       res
         .cookie("token", token)
         .json({ id: user.id, user: user.username, token: token })
-    } else {
-      res.status(400).json({ err: "Error occurred." })
     }
   } catch (error) {
     res.status(400).json({ err: "Error occurred." })
   }
 }
 
-export const getMe = async (req, res) => {
-  if (req.user) {
-    res.json(req.user)
-  } else {
-    res.status(401).json({ error: "Unauthorized." })
-  }
-}
+// export const getMe = async (req, res) => {
+//   if (req.user) {
+//     res.json(req.user)
+//   } else {
+//     res.status(401).json({ error: "Unauthorized." })
+//   }
+// }
 
 // logout
 // export const logOut = (req, res) => {

@@ -8,6 +8,7 @@ import cors from "cors"
 import userRouter from "./routes/users.routes.js"
 import movieRouter from "./routes/movies.routes.js"
 import memoryRouter from "./routes/memory.routes.js"
+import cookieParser from "cookie-parser"
 // uplaod images
 // import multer from "multer";
 
@@ -29,6 +30,7 @@ app.use(
 )
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 app.use(morgan("tiny"))
 
   

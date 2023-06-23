@@ -1,53 +1,43 @@
 import express from "express";
+import cookieParser from "cookie-parser"
 import {
   signUp,
   logIn,
-  getMe,
+  // getMe,
   // logOut,
   // getProfile,
-} from "../controllers/auth.controller.js";
-
+} from "../controllers/auth.controller.js"
 import {
   isUserAuthenticated,
   verifyExistingUser,
-} from "../middlewares/isUser.js";
-import { isAuth } from "../middlewares/isAuth.js";
+} from "../middlewares/isUser.js"
+// import { isAuth } from "../middlewares/isAuth.js"
+import jwt from "jsonwebtoken"
+import User from "../models/User.js"
+import { isAdmin } from "../middlewares/isAdmin.js"
 
-// jwt
-import jwt from "jsonwebtoken";
-
-// cookie-parser
-import cookieParser from "cookie-parser";
-import User from "../models/User.js";
-import { isAdmin } from "../middlewares/isAdmin.js";
-
-const userRouter = express.Router();
-const app = express();
-// app.use(cookieParser());
+const userRouter = express.Router()
+const app = express()
+app.use(cookieParser())
 
 // POST
-userRouter.post("/auth/signup", verifyExistingUser, signUp);
-userRouter.post("/auth/login", logIn);
+userRouter.post("/auth/signup", verifyExistingUser, signUp)
+userRouter.post("/auth/login", logIn)
 
 // user's profile
 userRouter.get("/auth/me", (req, res) => {
-  const { token } = req.cookies;
+  const { token } = req.cookies
   const verifyToken = jwt.verify(
     token,
     process.env.JWT_SECRET,
     {},
     (err, info) => {
-      if (err) throw err;
-      res.json(info);
+      if (err) throw err
+      res.json(info)
     }
-  );
-  res.json(verifyToken);
-});
-
-// userRouter.post("/auth/logout", (req, res) => {
-//   // const { token } = req.cookies;
-//   res.cookie(token, "").json("Fine!");
-// });
+  )
+  res.json(verifyToken)
+})
 
 userRouter.post("/auth/logout", (req, res) => {
   res.clearCookie("token") // Clear the token cookie
