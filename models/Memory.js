@@ -2,16 +2,10 @@ import { Schema, model } from "mongoose";
 
 const memorySchema = Schema(
   {
-    theme: {
-      type: String,
-      required: true,
-    },
+    theme: { type: String },
     cover: { type: String },
-    content: {
-      type: String,
-      required: true,
-    },
-    creator: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    content: { type: String },
+    creator: { type: Schema.Types.ObjectId, ref: "User" },
   },
   {
     timestamps: true,
