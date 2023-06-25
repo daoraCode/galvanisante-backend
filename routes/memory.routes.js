@@ -32,14 +32,14 @@ app.use(cookieParser())
 
 const MemoryRouter = express.Router()
 
-// app.use("/uploads", express.static(__dirname + "/uploads"))
-// @POST
 // MemoryRouter.post("/memory/create", isAuth, createMemory);
+
 MemoryRouter.post(
   "/memory/create",
   isAuth,
   uploadMiddleware.single("cover"),
   async (req, res) => {
+    console.log(req.file)
     const { originalname } = req.file
     const parts = originalname.split(".")
     const ext = parts[parts.length - 1]
@@ -54,8 +54,8 @@ MemoryRouter.post(
     newMemory.content = req.body.content
     newMemory.creator = req.user.id
     await newMemory.save()
-    console.log("73", newMemory)
     res.json(newMemory)
+    console.log(newMemory)
   }
 )
 
