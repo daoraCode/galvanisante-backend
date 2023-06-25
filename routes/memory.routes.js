@@ -53,6 +53,7 @@ MemoryRouter.post(
     newMemory.cover = newPath
     newMemory.content = req.body.content
     newMemory.creator = req.user.id
+    // newMemory.creator =
     await newMemory.save()
     res.json(newMemory)
     console.log(newMemory)
