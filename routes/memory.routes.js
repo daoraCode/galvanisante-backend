@@ -32,7 +32,7 @@ app.use(cookieParser())
 
 const MemoryRouter = express.Router()
 
-app.use("/uploads", express.static(__dirname + "/uploads"))
+// app.use("/uploads", express.static(__dirname + "/uploads"))
 // @POST
 // MemoryRouter.post("/memory/create", isAuth, createMemory);
 MemoryRouter.post(

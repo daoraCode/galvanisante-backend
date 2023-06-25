@@ -59,7 +59,8 @@ import User from "../models/User.js";
 
 // get all published memories from admin db
 export const getAllMemories = async (req, res) => {
-  const memories = await Memory.find({})
+  const memories = await Memory.find()
+  // memories.populate()
   res.status(200).json({
     success: true,
     message: "Memories found",
