@@ -45,7 +45,7 @@ export const logIn = async (req, res) => {
     if (match) {
       // login
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-        expiresIn: "1400s",
+        expiresIn: "2000s",
       })
       res
         .cookie("token", token)

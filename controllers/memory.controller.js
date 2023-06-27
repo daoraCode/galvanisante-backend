@@ -70,11 +70,9 @@ export const getAllMemories = async (req, res) => {
 
 // get a unique Memory by its id
 export const getMemory = async (req, res) => {
-  // const { _id } = req.params;
-  const { id } = req.params // <-- !!
-
   try {
-    const memory = await Memory.findById({ _id: id })
+    const { id } = req.params
+    const memory = await Memory.findById(id)
     res.status(200).json({
       success: true,
       message: "Memory found",
@@ -83,7 +81,7 @@ export const getMemory = async (req, res) => {
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: "Error. Not found Memory",
+      message: "Error occurred. Memory not found.",
       error: err.message,
     })
   }
@@ -117,17 +115,7 @@ export const deleteMemory = async (req, res) => {
       _id: id,
       creator: req.user.id,
     })
-
-    if (result != null) {
-      res
-        .status(204)
-        .send({ success: true, message: "Memory resource deleted" })
-    } else {
-      return res.status(403).json({
-        success: false,
-        message: "This not your memory",
-      })
-    }
+    res.status(204).send({ success: true, message: "Memory resource deleted" })
   } catch (err) {
     res.status(500).json({
       success: false,

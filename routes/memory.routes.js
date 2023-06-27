@@ -62,7 +62,7 @@ MemoryRouter.post(
 
 // @GET
 MemoryRouter.get("/memory", isAuth, getAllMemories)
-MemoryRouter.get("/memory/:_id", isUserAuthenticated, getMemory)
+MemoryRouter.get("/memory/:id", isAuth, getMemory)
 
 // @DELETE
 MemoryRouter.delete("/memory/delete/:id", isAuth, deleteMemory)
