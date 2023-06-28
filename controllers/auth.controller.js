@@ -58,6 +58,7 @@ export const logIn = async (req, res) => {
 
 // export const getMe = async (req, res) => {
 //   if (req.user) {
+//     console.log(req.user)
 //     res.json(req.user)
 //   } else {
 //     res.status(401).json({ error: "Unauthorized." })

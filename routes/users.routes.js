@@ -33,10 +33,13 @@ userRouter.get("/auth/me", (req, res) => {
     {},
     (err, info) => {
       if (err) throw err
-      res.json(info)
+      res.json({
+        success: true,
+        message: "Found user's profile",
+        profile: info,
+      })
     }
   )
-  res.json(verifyToken)
 })
 
 userRouter.post("/auth/logout", (req, res) => {
