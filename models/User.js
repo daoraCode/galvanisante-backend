@@ -5,7 +5,7 @@ const userSchema = Schema(
     username: {
       type: String,
       minlength: 4,
-      maxlength: 9,
+      maxlength: 10,
       required: true,
     },
     email: {
@@ -17,9 +17,9 @@ const userSchema = Schema(
     },
     password: {
       type: String,
-      min: 3,
-      max: 9,
-      // trim: true,
+      min: 8,
+      max: 13,
+      trim: true,
       required: true,
     },
     isAdmin: {

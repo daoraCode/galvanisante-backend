@@ -6,7 +6,6 @@ import connectDatabase from "./config/dbConfig.js"
 import cors from "cors"
 // routes
 import userRouter from "./routes/users.routes.js"
-import movieRouter from "./routes/movies.routes.js"
 import memoryRouter from "./routes/memory.routes.js"
 import cookieParser from "cookie-parser"
 // uplaod images
@@ -33,15 +32,10 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use("/uploads", express.static("uploads"))
 
-
 app.use(morgan("tiny"))
 
-  
-
-
 // routes
-app.use("/api/users", userRouter);
-app.use("/api/movies", movieRouter);
+app.use("/api/users", userRouter)
 app.use("/api/memories", memoryRouter);
 
 // server port
