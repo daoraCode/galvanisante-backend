@@ -16,9 +16,7 @@ export const signUp = async (req, res) => {
     const newUser = new User()
     newUser.username = req.body.username
     newUser.email = req.body.email
-    // !!
     newUser.password = hash
-    // !!
     console.log(newUser)
     await newUser.save()
 

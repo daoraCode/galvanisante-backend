@@ -63,27 +63,23 @@ export const getAllMemories = async (req, res) => {
   // memories.populate()
   res.status(200).json({
     success: true,
-    message: "Memories found",
+    message: "Found memories",
     memoriesList: memories,
   })
 }
 
 // get a unique Memory by its id
 export const getMemory = async (req, res) => {
-  try {
-    const { id } = req.params
-    const memory = await Memory.findById(id)
+  const { id } = req.params
+  const memory = await Memory.findById(id)
+  if (memory) {
     res.status(200).json({
       success: true,
-      message: "Memory found",
+      message: "Found memory",
       memory: memory,
     })
-  } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: "Error occurred. Memory not found.",
-      error: err.message,
-    })
+  } else {
+    res.status(400).send("Not Found")
   }
 }
 

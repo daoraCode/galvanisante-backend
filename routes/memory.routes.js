@@ -55,7 +55,9 @@ MemoryRouter.post(
     newMemory.creator = req.user.id
     // newMemory.creator =
     await newMemory.save()
-    res.json(newMemory)
+    res.json({
+      newMemory: newMemory,
+    })
     console.log(newMemory)
   }
 )
