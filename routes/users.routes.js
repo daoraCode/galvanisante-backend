@@ -55,7 +55,7 @@ userRouter.get("/auth/me", (req, res) => {
     console.error(err)
     res.status(401).json({
       success: false,
-      message: "Authentication failed. Invalid token.",
+      message: "--Authentication failed.",
     })
   }
 })
