@@ -40,12 +40,13 @@ userRouter.get("/auth/me", (req, res) => {
       })
     }
   )
+  res.json(verifyToken)
 })
 
 userRouter.post("/auth/logout", (req, res) => {
-  res.clearCookie("token") // Clear the token cookie
-  res.status(200).json({ message: "Fine!" }) // Send the response
-});
+  res.clearCookie("token") // Clear jwt stored in cookie web browser
+  res.status(200).json({ message: "Fine!" })
+})
 
 
 export default userRouter;
