@@ -11,7 +11,7 @@ import {
   isUserAuthenticated,
   verifyExistingUser,
 } from "../middlewares/isUser.js"
-// import { isAuth } from "../middlewares/isAuth.js"
+import { isAuth } from "../middlewares/isAuth.js"
 import jwt from "jsonwebtoken"
 import User from "../models/User.js"
 import { isAdmin } from "../middlewares/isAdmin.js"
@@ -25,22 +25,39 @@ userRouter.post("/auth/signup", verifyExistingUser, signUp)
 userRouter.post("/auth/login", logIn)
 
 // user's profile
+// userRouter.get("/auth/me", (req, res) => {
+//   const { token } = req.cookies
+//   const verifyToken = jwt.verify(
+//     token,
+//     process.env.JWT_SECRET,
+//     {},
+//     (err, info) => {
+//       if (err) throw err
+//       res.json({
+//         success: true,
+//         message: "Found user's profile",
+//         profile: info,
+//       })
+//     }
+//   )
+// })
+
 userRouter.get("/auth/me", (req, res) => {
   const { token } = req.cookies
-  const verifyToken = jwt.verify(
-    token,
-    process.env.JWT_SECRET,
-    {},
-    (err, info) => {
-      if (err) throw err
-      res.json({
-        success: true,
-        message: "Found user's profile",
-        profile: info,
-      })
-    }
-  )
-  res.json(verifyToken)
+  try {
+    const info = jwt.verify(token, process.env.JWT_SECRET)
+    res.json({
+      success: true,
+      message: "Found user's profile",
+      profile: info,
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(401).json({
+      success: false,
+      message: "Authentication failed. Invalid token.",
+    })
+  }
 })
 
 userRouter.post("/auth/logout", (req, res) => {
