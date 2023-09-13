@@ -42,10 +42,10 @@ userRouter.post("/auth/login", logIn)
 //   )
 // })
 
-userRouter.get("/auth/me", (req, res) => {
+userRouter.get("/auth/me", async (req, res) => {
   const { token } = req.cookies
   try {
-    const info = jwt.verify(token, process.env.JWT_SECRET)
+    const info = await jwt.verify(token, process.env.JWT_SECRET)
     res.json({
       success: true,
       message: "Found user's profile",
