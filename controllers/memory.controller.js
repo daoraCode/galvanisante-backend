@@ -1,63 +1,7 @@
 import Memory from "../models/Memory.js";
 import User from "../models/User.js";
 
-
-// Multer configuration
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "uploads/"); // Specify the folder where you want to save the uploaded files
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, Date.now() + "-" + file.originalname); // Generate a unique filename for each uploaded file
-//   },
-// });
-
-// const upload = multer({ storage });
-
-// export const createMemory = async (req, res) => {
-//   const { id } = req.params;
-//   const { theme, cover, content } = req.body;
-
-//   try {
-//     const existingMemory = await Memory.findOne({
-//       theme: theme,
-//     });
-
-//     if (existingMemory) {
-//       return res.status(403).json({
-//         success: false,
-//         message: "Memory already exists.",
-//         oldMemory: existingMemory.theme,
-//       });
-//     }
-
-//     const newMemory = new Memory();
-
-//     // req.body = user's form input content filled !!
-//     newMemory.theme = req.body.theme;
-//     newMemory.cover = req.body.cover;
-//     newMemory.content = req.body.content;
-//     newMemory.creator = req.user.id;
-
-//     console.log(newMemory);
-//     await newMemory.save();
-
-//     res.status(201).json({
-//       success: true,
-//       message: "Created Memory.",
-//       createdMemory: newMemory,
-//       creator: newMemory.creator,
-//     });
-//   } catch (err) {
-//     res.status(500).json({
-//       success: false,
-//       message: "Error occurred. Memory not created.",
-//       error: err.message,
-//     });
-//   }
-// };
-
-// get all published memories from admin db
+// get all memories
 export const getAllMemories = async (req, res) => {
   const memories = await Memory.find()
   // memories.populate()
@@ -68,7 +12,7 @@ export const getAllMemories = async (req, res) => {
   })
 }
 
-// get a unique Memory by its id
+// get a unique memory from id
 export const getMemory = async (req, res) => {
   const { id } = req.params
   const memory = await Memory.findById(id)

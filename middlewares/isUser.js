@@ -14,10 +14,10 @@ export const verifyExistingUser = async (req, res, next) => {
   }
 };
 
-export const isUserAuthenticated = async (req, res, next) => {
-  if (req.user) {
-    next();
-  } else {
-    res.status(403).json({ error: "Forbidden." });
-  }
-};
+// export const isUserAuthenticated = async (req, res, next) => {
+//   if (req.user) {
+//     next();
+//   } else {
+//     res.status(403).json({ error: "Forbidden." });
+//   }
+// };

@@ -19,10 +19,8 @@ import {
 
 import Memory from "../models/Memory.js"
 
-// middlewares
-import { isUserAuthenticated } from "../middlewares/isUser.js"
-import { isAuth } from "../middlewares/isAuth.js"
-// import { isAdmin } from "../middlewares/isAdmin.js";
+// import { isUserAuthenticated } from '../middlewares/isUser.js'
+import { isAuth } from '../middlewares/isAuth.js'
 
 const app = express()
 
@@ -32,18 +30,16 @@ app.use(cookieParser())
 
 const MemoryRouter = express.Router()
 
-// MemoryRouter.post("/memory/create", isAuth, createMemory);
-
 MemoryRouter.post(
-  "/memory/create",
+  '/memory/create',
   isAuth,
-  uploadMiddleware.single("cover"),
+  uploadMiddleware.single('cover'),
   async (req, res) => {
     console.log(req.file)
     const { originalname } = req.file
-    const parts = originalname.split(".")
+    const parts = originalname.split('.')
     const ext = parts[parts.length - 1]
-    const newPath = req.file.path + "." + ext
+    const newPath = req.file.path + '.' + ext
 
     fs.renameSync(req.file.path, newPath)
 
@@ -62,14 +58,9 @@ MemoryRouter.post(
   }
 )
 
-// @GET
-MemoryRouter.get("/memory", isAuth, getAllMemories)
-MemoryRouter.get("/memory/:id", isAuth, getMemory)
-
-// @DELETE
-MemoryRouter.delete("/memory/delete/:id", isAuth, deleteMemory)
-
-// @PUT
+MemoryRouter.get('/memory', isAuth, getAllMemories)
+MemoryRouter.get('/memory/:id', isAuth, getMemory)
+MemoryRouter.delete('/memory/delete/:id', isAuth, deleteMemory)
 MemoryRouter.post("/memory/update/:id", isAuth, updateMemory)
 
 export default MemoryRouter
