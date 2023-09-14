@@ -41,16 +41,16 @@ export const logIn = async (req, res) => {
 
     if (match) {
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-        expiresIn: '2000s',
+        expiresIn: '1800s',
       })
-      const cookieOptions = {
-        maxAge: 1000 * 60 * 20,
-        httpOnly: true,
-        signed: true,
-      }
       res
-        .setHeader('Set-Cookie', serialize('accessToken', token, cookieOptions))
-        .cookie('token', token)
+        .setHeader('Set-Cookie', serialize('accessToken', token))
+        .cookie('token', token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: 'None',
+          maxAge: 3600000,
+        })
         .json({ id: user.id, user: user.username, token: token })
     }
   } catch (error) {
