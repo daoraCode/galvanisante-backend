@@ -14,7 +14,7 @@ import {
 import { isAuth } from "../middlewares/isAuth.js"
 import jwt from "jsonwebtoken"
 import User from "../models/User.js"
-import { isAdmin } from "../middlewares/isAdmin.js"
+// import { isAdmin } from "../middlewares/isAdmin.js"
 
 const userRouter = express.Router()
 const app = express()
@@ -42,22 +42,23 @@ userRouter.post("/auth/login", logIn)
 //   )
 // })
 
-userRouter.get("/auth/me", async (req, res) => {
-  const { token } = req.cookies
-  console.log(token, "token auth/me : 47")
+userRouter.get('/auth/me', async (req, res) => {
   try {
+    const { token } = await req.cookies
     const info = await jwt.verify(token, process.env.JWT_SECRET)
-    console.log(info, "data info : ligne 50")
-    res.json({
+    if (!info) {
+      throw new Error('Info Not Found')
+    }
+    return res.json({
       success: true,
-      message: "Found user's profile",
+      message: 'Profile User Found',
       profile: info,
     })
-  } catch (err) {
-    console.error(err)
-    res.status(401).json({
+  } catch (error) {
+    console.error(error)
+    return res.status(401).json({
       success: false,
-      message: "--Authentication failed.",
+      message: 'Authentication Failed',
     })
   }
 })
