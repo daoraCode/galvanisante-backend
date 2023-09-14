@@ -10,7 +10,7 @@ export const isAuth = async (req, res, next) => {
   } else {
     const token = authHeader?.split(' ')[1] // indicates either there's token or empty
     try {
-      const user = jwt.verify(token, process.env.JWT_SECRET)
+      const user = await jwt.verify(token, process.env.JWT_SECRET)
       req.user = user
       next()
     } catch (err) {
