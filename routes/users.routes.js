@@ -44,8 +44,10 @@ userRouter.post("/auth/login", logIn)
 
 userRouter.get("/auth/me", async (req, res) => {
   const { token } = req.cookies
+  console.log(token, "token auth/me : 47")
   try {
     const info = await jwt.verify(token, process.env.JWT_SECRET)
+    console.log(info, "data info : ligne 50")
     res.json({
       success: true,
       message: "Found user's profile",
