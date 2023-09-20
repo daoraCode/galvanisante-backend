@@ -19,7 +19,6 @@ import {
 
 import Memory from "../models/Memory.js"
 
-// import { isUserAuthenticated } from '../middlewares/isUser.js'
 import { isAuth } from '../middlewares/isAuth.js'
 
 const app = express()
@@ -35,7 +34,7 @@ MemoryRouter.post(
   isAuth,
   uploadMiddleware.single('cover'),
   async (req, res) => {
-    console.log(req.file)
+    // console.log(req.file)
     const { originalname } = req.file
     const parts = originalname.split('.')
     const ext = parts[parts.length - 1]
@@ -54,7 +53,7 @@ MemoryRouter.post(
     res.json({
       newMemory: newMemory,
     })
-    console.log(newMemory)
+    // console.log(newMemory)
   }
 )
 

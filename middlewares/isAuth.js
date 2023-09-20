@@ -1,21 +1,17 @@
-import express from 'express'
 import jwt from 'jsonwebtoken'
 
 export const isAuth = async (req, res, next) => {
-  const authHeader = req.headers.authorization
-  if (!authHeader) {
-    res.status(401).json({
-      message: 'Unauthorized',
-    })
-  } else {
-    const token = authHeader?.split(' ')[1] // indicates either there's token or empty
-    try {
-      const user = await jwt.verify(token, process.env.JWT_SECRET)
-      req.user = user
-      next()
-    } catch (err) {
-      console.log(err)
-      res.status(401).json({ message: 'Unauthorized' })
+  try {
+    const authorizationHeader = req.headers.authorization
+    if (!authorizationHeader || !authorizationHeader.startsWith('Bearer ')) {
+      throw new Error('Invalid or missing Authorization header')
     }
+    const token = authorizationHeader.split(' ')[1]
+    req.user = await jwt.verify(token, process.env.JWT_SECRET)
+    console.log('Token:', token)
+    next()
+  } catch (err) {
+    console.error(err)
+    res.status(403).json({ error: 'Unauthorized' })
   }
 }
